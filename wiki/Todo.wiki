@@ -1,0 +1,26 @@
+#summary Tasks that need to be done.
+#labels Phase-Design
+
+= Introduction =
+
+This is a list of things we would like to accomplish for this application.
+
+=Programming=
+
+-Add in optimization for collision calculation.  Particles should be put into frozen mode and not calculated if they have been inactive for 10 frames in a row ( this could also be optimized ).  Unfreeze any particles around a particle that has changed state, by either moving or any other action.  This should avoid unnecessary collision calculation.
+
+-Sort unfrozen particles each frame by their Y position to avoid unnecessary collisions while particles are falling. 
+
+-Add in the option to edit any element, not just custom element.
+
+-Add in the option to use sliders to change the background color.
+
+-Add in black-holes.
+
+=Art=
+
+-Make new button for eraser, the "X" is unclear that it is the eraser.
+
+-Create button images for main menu.
+
+-Create new backgrounds for main menu and loading.
