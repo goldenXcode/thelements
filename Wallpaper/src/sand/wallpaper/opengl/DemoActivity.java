@@ -84,11 +84,17 @@ public class DemoActivity extends GLWallpaperService implements SensorListener
 				//Tell jni
 				DemoActivity.fd(2);
 				Log.v("FallingSandPaper", "random_pref: " + myPrefs.getBoolean("random_pref", true));
-				if(myPrefs.getBoolean("random_pref", true) == true)
+				if(myPrefs.getBoolean("random_pref", true))
 				{
 					Log.v("FallingSandPaper", "Random");
 					//Randomly set the next element
-					elementsetter(generator.nextInt(23));
+					do
+					{
+						random_num = generator.nextInt(25);
+					}
+					while(random_num == 3 || random_num == 8);
+					
+					setelement(random_num);
 				}
 				else
 				{
@@ -97,12 +103,22 @@ public class DemoActivity extends GLWallpaperService implements SensorListener
 					if(getelement() == 22)
 					{
 						//Reset to 0 if last element
-						elementsetter(0);
+						setelement(0);
+					}
+					else if(getelement() == 2)
+					{
+						//Set element to 4, cuz 3 is gone
+						setelement(4);
+					}
+					else if(getelement() == 7)
+					{
+						//Set element to 9, cuz 8 is gone
+						setelement(9);
 					}
 					else
 					{
 						//Otherwise increment by one
-						elementsetter(getelement()+1);
+						setelement(getelement()+1);
 					}
 				}
 			}
@@ -179,8 +195,8 @@ public class DemoActivity extends GLWallpaperService implements SensorListener
 	Random generator = new Random();
 
 	private float last_x, last_y, last_z;
-
 	private long lastUpdate = -1;
+	private int random_num;
 
 	private SensorManager sensorMgr;
 
@@ -189,102 +205,6 @@ public class DemoActivity extends GLWallpaperService implements SensorListener
 	public DemoActivity()
 	{
 		super();
-	}
-
-	public void elementsetter(int item)
-	{
-		if (item == 0) // Sand
-		{
-			setelement(0);
-		}
-		else if (item == 1) // Water
-		{
-			setelement(1);
-		}
-		else if (item == 2) // Plant
-		{
-			setelement(4);
-		}
-		else if (item == 3) // Wall
-		{
-			setelement(2);
-		}
-		else if (item == 4) // Fire
-		{
-			setelement(5);
-		}
-		else if (item == 5) // Ice
-		{
-			setelement(6);
-		}
-		else if (item == 6)// Generator
-		{
-			setelement(7);
-		}
-		else if (item == 7)// Oil
-		{
-			setelement(9);
-		}
-		else if (item == 8)// Magma
-		{
-			setelement(10);
-		}
-		else if (item == 9)// Stone
-		{
-			setelement(11);
-		}
-		else if (item == 10)// C4
-		{
-			setelement(12);
-		}
-		else if (item == 11)// C4++
-		{
-			setelement(13);
-		}
-		else if (item == 12)// Fuse
-		{
-			setelement(14);
-		}
-		else if (item == 13)// Destructible wall
-		{
-			setelement(15);
-		}
-		else if (item == 14)// Drag
-		{
-			setelement(16);
-		}
-		else if (item == 15)// Acid
-		{
-			setelement(17);
-		}
-		else if (item == 16)// Steam
-		{
-			setelement(18);
-		}
-		else if (item == 17)// Salt
-		{
-			setelement(19);
-		}
-		else if (item == 18)// Salt-water
-		{
-			setelement(20);
-		}
-		else if (item == 19)// Glass
-		{
-			setelement(21);
-		}
-		else if (item == 20)// Custom 1
-		{
-			setelement(22);
-		}
-		else if (item == 21)// Mud
-		{
-			setelement(23);
-		}
-		else if (item == 22)// Custom 3
-		{
-			setelement(24);
-		}
 	}
 
 	//Required to have this

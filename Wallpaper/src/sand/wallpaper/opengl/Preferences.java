@@ -22,6 +22,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 		//Set the preference screen created by createPreferenceHierarchy()
 		setPreferenceScreen(createPreferenceHierarchy());
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+		getPreferenceManager().setSharedPreferencesName("TheElementsPrefs");
 	}
 	
 	//Function to set up the preferences
@@ -126,10 +127,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 			{
 				DemoActivity.setAccelOnOff(1);
 			}
-		}
-		else
-		{
-			Log.v("FallingSandPaper", "random_pref: " + sharedPreferences.getBoolean("random_pref", true));
 		}
 	}
 	
