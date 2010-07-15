@@ -83,10 +83,8 @@ public class DemoActivity extends GLWallpaperService implements SensorListener
 			{
 				//Tell jni
 				DemoActivity.fd(2);
-				Log.v("FallingSandPaper", "random_pref: " + myPrefs.getBoolean("random_pref", true));
 				if(myPrefs.getBoolean("random_pref", true))
 				{
-					Log.v("FallingSandPaper", "Random");
 					//Randomly set the next element
 					do
 					{
@@ -98,7 +96,6 @@ public class DemoActivity extends GLWallpaperService implements SensorListener
 				}
 				else
 				{
-					Log.v("FallingSandPaper", "Non-random: "+getelement());
 					//Sequentially set the next element
 					if(getelement() == 22)
 					{

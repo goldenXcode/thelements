@@ -68,7 +68,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         accel_pref.setTitle(R.string.accel_pref_title);
         accel_pref.setSummary(R.string.accel_pref_summary);
         accel_pref.setKey("accel_pref");
-        root.addPreference(accel_pref);
+        //root.addPreference(accel_pref);
         
         //Random checkbox
         CheckBoxPreference random_pref = new CheckBoxPreference(this);
@@ -85,8 +85,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         	back_color_pref.setValue("black");
         if(!sharedPrefs.contains("flip_screen_pref"))
         	flip_screen_pref.setChecked(false);
-        if(!sharedPrefs.contains("accel_pref"))
-        	accel_pref.setChecked(false);
+        /*if(!sharedPrefs.contains("accel_pref"))
+        	accel_pref.setChecked(false);*/
         if(!sharedPrefs.contains("random_pref"))
         	random_pref.setChecked(true);
         
@@ -149,13 +149,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 		{
 			DemoActivity.setFlip(1);
 		}
-		if(sharedPreferences.getBoolean("accel_pref", false) == false)
+		/*if(sharedPreferences.getBoolean("accel_pref", false) == false)
 		{
 			DemoActivity.setAccelOnOff(0);
 		}
 		else
 		{
 			DemoActivity.setAccelOnOff(1);
-		}
+		}*/
 	}
 }
