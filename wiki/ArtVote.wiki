@@ -1,0 +1,11 @@
+#summary Vote on possibly included artwork
+
+= Introduction =
+
+Add any of your original artwork to the "Art" section along with a unique name, and a description of where you want it to go. Vote on the artwork in the "Vote" section. Add your email address under the name of the image, so that nobody can spam votes. We still need to figure out a more official voting system.
+
+= Art =
+
+Nothing here yet.
+
+= Votes =
