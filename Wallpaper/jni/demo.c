@@ -211,10 +211,13 @@ CreatePoint(int k, int l, int e)
 
 		xvel[i] = 0;
 		yvel[i] = 0;
+		frozen[i] = 0;
 
 		setBitmapColor(k, l, e);
 
 		set[i] = 1;
+
+		unFreezeParticles(k, l);
 	}
 }
 DeletePoint(int partnum)
@@ -222,15 +225,18 @@ DeletePoint(int partnum)
 	setBitmapColor((int) x[partnum], (int) y[partnum], 3);
 	allcoords[(int) x[partnum]][(int) y[partnum]] = -1;
 
+	unFreezeParticles(x[partnum], y[partnum]);
 	//cleaning up
 	x[partnum] = 0;
 	y[partnum] = 0;
+	frozen[partnum] = 0;
 	element[partnum] = 0;
 	xvel[partnum] = 0;
 	yvel[partnum] = 0;
 	set[partnum] = 0;
 	avail[loq] = partnum;
 	loq++;
+
 }
 
 setBitmapColor(int xpos, int ypos, int element)
@@ -242,22 +248,6 @@ setBitmapColor(int xpos, int ypos, int element)
 collide(int fp, int sp)//first particle and second particle
 {
 	int temporary = collision[22][0];
-	if (element[fp] == 22)
-	{
-		if (collision[22][0] == 0)
-		{
-			__android_log_write(ANDROID_LOG_INFO, "DemoActivity", "0");
-		}
-		else if (collision[22][0] == 1)
-		{
-			__android_log_write(ANDROID_LOG_ERROR, "DemoActivity", "1");
-		}
-		else
-		{
-			__android_log_write(ANDROID_LOG_ERROR, "DemoActivity",
-					"none of the above");
-		}
-	}
 	int olyf = oldy[fp];
 	int olxf = oldx[fp];
 	int olxs = oldx[sp];
@@ -323,7 +313,7 @@ collide(int fp, int sp)//first particle and second particle
 
 			int random = rand() % 2;
 			random = random * 2 - 1;
-			if (allcoords[olxf + random][olyf + 1] == -1 && olxf + random > 0
+			if (allcoords[olxf + random][olyf + 1] == -1 && olxf + random > 1
 					&& olyf + 1 < maxy && olxf + random < maxx) // left down
 			{
 				allcoords[olxf][olyf] = -1;
@@ -337,7 +327,7 @@ collide(int fp, int sp)//first particle and second particle
 				x[fp] = olxf + random;
 			}
 			else if (allcoords[olxf - random][olyf + 1] == -1 && olxf - random
-					> 0 && olyf + 1 < maxy && olxf - random < maxx) // left down
+					> 1 && olyf + 1 < maxy && olxf - random < maxx) // left down
 			{
 				allcoords[olxf][olyf] = -1;
 				setBitmapColor(olxf, olyf, 3);
@@ -349,7 +339,7 @@ collide(int fp, int sp)//first particle and second particle
 				x[fp] = olxf - random;
 			}
 			else if (allcoords[olxf + random][olyf] == -1 && olxf + random
-					< maxx && olxf + random > 0) // right
+					< maxx && olxf + random > 1) // right
 			{
 				allcoords[olxf][olyf] = -1;
 				setBitmapColor(olxf, olyf, 3);
@@ -361,7 +351,7 @@ collide(int fp, int sp)//first particle and second particle
 				x[fp] = olxf + random;
 			}
 			else if (allcoords[olxf - random][olyf] == -1 && olxf - random
-					< maxx && olxf - random > 0) // right
+					< maxx && olxf - random > 1) // right
 			{
 				allcoords[olxf][olyf] = -1;
 				setBitmapColor(olxf, olyf, 3);
@@ -430,7 +420,7 @@ collide(int fp, int sp)//first particle and second particle
 			allcoords[(int) x[fp]][(int) y[fp]] = fp;
 			setBitmapColor((int) x[fp], (int) y[fp], element[fp]);
 		}
-		else if (allcoords[olxf + random][olyf + 1] == -1 && olxf + random > 0
+		else if (allcoords[olxf + random][olyf + 1] == -1 && olxf + random > 1
 				&& olyf + 1 < maxy && olxf + random < maxx) // left down
 		{
 			allcoords[olxf][olyf] = -1;
@@ -442,7 +432,7 @@ collide(int fp, int sp)//first particle and second particle
 			y[fp] = olyf + 1;
 			x[fp] = olxf + random;
 		}
-		else if (allcoords[olxf - random][olyf + 1] == -1 && olxf - random > 0
+		else if (allcoords[olxf - random][olyf + 1] == -1 && olxf - random > 1
 				&& olyf + 1 < maxy && olxf - random < maxx) // left down
 		{
 			allcoords[olxf][olyf] = -1;
@@ -455,7 +445,7 @@ collide(int fp, int sp)//first particle and second particle
 			x[fp] = olxf - random;
 		}
 		else if (allcoords[olxf + random][olyf] == -1 && olxf + random < maxx
-				&& olxf + random > 0) // right
+				&& olxf + random > 1) // right
 		{
 			allcoords[olxf][olyf] = -1;
 			setBitmapColor(olxf, olyf, 3);
@@ -467,7 +457,7 @@ collide(int fp, int sp)//first particle and second particle
 			x[fp] = olxf + random;
 		}
 		else if (allcoords[olxf - random][olyf] == -1 && olxf - random < maxx
-				&& olxf - random > 0) // right
+				&& olxf - random > 1) // right
 		{
 			allcoords[olxf][olyf] = -1;
 			setBitmapColor(olxf, olyf, 3);
@@ -677,7 +667,7 @@ collide(int fp, int sp)//first particle and second particle
 				int random = rand() % 2;
 				random = random * 2 - 1;
 				if (allcoords[olxf + random][olyf + 1] == -1 && olxf + random
-						> 0 && olyf + 1 < maxy && olxf + random < maxx) // left down
+						> 1 && olyf + 1 < maxy && olxf + random < maxx) // left down
 				{
 					allcoords[olxf][olyf] = -1;
 					//clear old spot
@@ -690,7 +680,7 @@ collide(int fp, int sp)//first particle and second particle
 					x[fp] = olxf + random;
 				}
 				else if (allcoords[olxf - random][olyf + 1] == -1 && olxf
-						- random > 0 && olyf + 1 < maxy && olxf - random < maxx) // left down
+						- random > 1 && olyf + 1 < maxy && olxf - random < maxx) // left down
 				{
 					allcoords[olxf][olyf] = -1;
 					setBitmapColor(olxf, olyf, 3);
@@ -702,7 +692,7 @@ collide(int fp, int sp)//first particle and second particle
 					x[fp] = olxf - random;
 				}
 				else if (allcoords[olxf + random][olyf] == -1 && olxf + random
-						< maxx && olxf + random > 0) // right
+						< maxx && olxf + random > 1) // right
 				{
 					allcoords[olxf][olyf] = -1;
 					setBitmapColor(olxf, olyf, 3);
@@ -714,7 +704,7 @@ collide(int fp, int sp)//first particle and second particle
 					x[fp] = olxf + random;
 				}
 				else if (allcoords[olxf - random][olyf] == -1 && olxf - random
-						< maxx && olxf - random > 0) // right
+						< maxx && olxf - random > 1) // right
 				{
 					allcoords[olxf][olyf] = -1;
 					setBitmapColor(olxf, olyf, 3);
@@ -844,8 +834,8 @@ collide(int fp, int sp)//first particle and second particle
 			{
 				for (j = -2; j <= 2; j++)
 				{
-					if (xfp + i >= 0 && xfp + i < maxx && yfp + j > 0 && yfp
-							+ j < maxy && !(i == 0 && j == 0))
+					if (xfp + i > 1 && xfp + i < maxx && yfp + j > 1 && yfp + j
+							< maxy && !(i == 0 && j == 0))
 					{
 						a = allcoords[xfp + i][yfp + j]; //The allcoords at the prospective point
 						if (a != -1 && collision[element[a]][5] == 6)
@@ -907,8 +897,8 @@ collide(int fp, int sp)//first particle and second particle
 			{
 				for (j = -2; j <= 2; j++)
 				{
-					if (xsp + i >= 0 && xsp + i < maxx && ysp + j > 0 && ysp
-							+ j < maxy && !(i == 0 && j == 0))
+					if (xsp + i > 1 && xsp + i < maxx && ysp + j > 1 && ysp + j
+							< maxy && !(i == 0 && j == 0))
 					{
 						a = allcoords[xsp + i][ysp + j];
 						if (a != -1 && collision[element[a]][5] == 6)
@@ -1067,7 +1057,7 @@ collide(int fp, int sp)//first particle and second particle
 				for (j = -0; j <= 0; j++)
 				{
 					if (txpos + i < maxx && txpos + i > 1 && typos + j < maxy
-							&& typos + j > 0) //if within bounds
+							&& typos + j > 1) //if within bounds
 					{
 						tpart = allcoords[txpos + i][typos + j];
 
@@ -1096,7 +1086,7 @@ collide(int fp, int sp)//first particle and second particle
 			{
 				for (j = -2; j <= 2; j++)
 				{
-					if (txpos + i > 1 && txpos + i < maxx && typos + j > 0
+					if (txpos + i > 1 && txpos + i < maxx && typos + j > 1
 							&& typos + j < maxy)
 					{
 						a = allcoords[txpos + i][typos + j]; //The allcoords at the prospective point
@@ -1111,11 +1101,11 @@ collide(int fp, int sp)//first particle and second particle
 							element[a] = 5;
 							setBitmapColor(txpos + i, typos + j, 5);
 
-							int random = rand() % 10;
+							int random = rand() % 11;
 							random -= 5;
 							xvel[a] = random; //xvel is a random int from -5 to 5
 
-							random = rand() % 10;
+							random = rand() % 11; //mod 11 goes from 0 to 10
 							random -= 5;
 							yvel[a] = random; //yvel is a random int from -5 to 5
 						}
@@ -1148,7 +1138,7 @@ collide(int fp, int sp)//first particle and second particle
 						* exploness[spelement]; j++)
 				{
 					if (txpos + i < maxx && txpos + i > 1 && typos + j < maxy
-							&& typos + j > 0) //if within bounds
+							&& typos + j > 1) //if within bounds
 					{
 						tpart = allcoords[txpos + i][typos + j];
 
@@ -1177,7 +1167,7 @@ collide(int fp, int sp)//first particle and second particle
 			{
 				for (j = -2; j <= 2; j++)
 				{
-					if (txpos + i > 1 && txpos + i < maxx && typos + j > 0
+					if (txpos + i > 1 && txpos + i < maxx && typos + j > 1
 							&& typos + j < maxy)
 					{
 						a = allcoords[txpos + i][typos + j]; //The allcoords at the prospective point
@@ -1192,11 +1182,11 @@ collide(int fp, int sp)//first particle and second particle
 							element[a] = 5;
 							setBitmapColor(txpos + i, typos + j, 5);
 
-							int random = rand() % 10;
+							int random = rand() % 11; //mod 11 goes from 0 to 10
 							random -= 5;
 							xvel[a] = random; //xvel is a random int from -5 to 5
 
-							random = rand() % 10;
+							random = rand() % 11;
 							random -= 5;
 							yvel[a] = random; //yvel is a random int from -5 to 5
 						}
@@ -1234,7 +1224,7 @@ collide(int fp, int sp)//first particle and second particle
 				for (j = -0; j <= 0; j++)
 				{
 					if (txpos + i < maxx && txpos + i > 1 && typos + j < maxy
-							&& typos + j > 0) //if within bounds
+							&& typos + j > 1) //if within bounds
 					{
 						tpart = allcoords[txpos + i][typos + j];
 
@@ -1263,7 +1253,7 @@ collide(int fp, int sp)//first particle and second particle
 			{
 				for (j = -2; j <= 2; j++)
 				{
-					if (txpos + i > 1 && txpos + i < maxx && typos + j > 0
+					if (txpos + i > 1 && txpos + i < maxx && typos + j > 1
 							&& typos + j < maxy)
 					{
 						a = allcoords[txpos + i][typos + j]; //The allcoords at the prospective point
@@ -1276,14 +1266,14 @@ collide(int fp, int sp)//first particle and second particle
 								|| collision[element[a]][5] == 15
 								|| collision[element[a]][5] == 16))
 						{
-							element[a] = 5;
-							setBitmapColor(txpos + i, typos + j, 5);
+							element[a] = 5; //change a to fire
+							setBitmapColor(txpos + i, typos + j, 5); //change color of a to that of fire
 
-							int random = rand() % 10;
+							int random = rand() % 11; // mod 11 goes from 0 to 10
 							random -= 5;
 							xvel[a] = random; //xvel is a random int from -5 to 5
 
-							random = rand() % 10;
+							random = rand() % 11;
 							random -= 5;
 							yvel[a] = random; //yvel is a random int from -5 to 5
 						}
@@ -1316,7 +1306,7 @@ collide(int fp, int sp)//first particle and second particle
 						* exploness[spelement]; j++)
 				{
 					if (txpos + i < maxx && txpos + i > 1 && typos + j < maxy
-							&& typos + j > 0) //if within bounds
+							&& typos + j > 1) //if within bounds
 					{
 						tpart = allcoords[txpos + i][typos + j];
 
@@ -1345,7 +1335,7 @@ collide(int fp, int sp)//first particle and second particle
 			{
 				for (j = -2; j <= 2; j++)
 				{
-					if (txpos + i > 1 && txpos + i < maxx && typos + j > 0
+					if (txpos + i > 1 && txpos + i < maxx && typos + j > 1
 							&& typos + j < maxy)
 					{
 						a = allcoords[txpos + i][typos + j]; //The allcoords at the prospective point
@@ -1361,11 +1351,11 @@ collide(int fp, int sp)//first particle and second particle
 							element[a] = 5;
 							setBitmapColor(txpos + i, typos + j, 5);
 
-							int random = rand() % 10;
+							int random = rand() % 11; //mod 11 goes from 0 to 10
 							random -= 5;
 							xvel[a] = random; //xvel is a random int from -5 to 5
 
-							random = rand() % 10;
+							random = rand() % 11; //mod 11 goes from 0 to 10
 							random -= 5;
 							yvel[a] = random; //yvel is a random int from -5 to 5
 						}
@@ -1747,7 +1737,7 @@ collide(int fp, int sp)//first particle and second particle
 	else if (type == 24) //Salt - Water
 	{
 		if (element[fp] == 19 || (element[fp] == 22
-				&& colliseelement1[element[sp]] == 19) || (element[sp] == 22 && colliseelement1[fp] != 19)) //fp is salt
+				&& colliseelement1[element[sp]] == 19)) //fp is salt
 		{
 			//Delete the old point
 			allcoords[olxf][olyf] = -1;
@@ -1871,6 +1861,8 @@ collide(int fp, int sp)//first particle and second particle
 
 			//Change the element to glass
 			element[fp] = 21;
+			setBitmapColor(x[fp], y[fp], 21);
+
 		}
 	}
 	else if (type == 28) //Water - Sand
@@ -1904,7 +1896,6 @@ collide(int fp, int sp)//first particle and second particle
 			allcoords[olxf][olyf] = -1;
 			setBitmapColor(olxf, olyf, 3);
 
-
 			DeletePoint(sp); //delete the water
 			element[fp] = 23; //set the sand to be mud
 
@@ -1922,17 +1913,19 @@ collide(int fp, int sp)//first particle and second particle
 		if (element[fp] == 23 || (element[fp] == 22
 				&& colliseelement1[element[sp]] == 23) || (element[sp] == 22
 				&& colliseelement1[element[fp]] != 23))
-		{ //fp is mud
+		{ //sp is mud
 
 			//Delete the old point
 			allcoords[olxf][olyf] = -1;
 			setBitmapColor(olxf, olyf, 3);
 
-
 			DeletePoint(sp); //delete the fire
 			element[fp] = 0; //change the mud to sand
-			allcoords[x[fp]][y[fp]] = fp;x
-			setBitmapColor(x[fp], y[fp], element[fp]); //update the color of mud
+
+			int xfp = x[fp], yfp = y[fp]; //Some temp variables
+
+			allcoords[xfp][yfp] = fp;
+			setBitmapColor(xfp, yfp, element[fp]); //update the color of mud
 
 		}
 		else
@@ -1972,6 +1965,33 @@ collide(int fp, int sp)//first particle and second particle
 //------------------------------------------------End Collisions Section------------------------------------------------------//
 
 
+//this function unfreezes particles around a point
+unFreezeParticles(int xcentre, int ycentre)
+{
+	int ix;
+	int jy;
+	for (ix = -1; ix <= 1; ix++)
+	{
+		for (jy = -1; jy <= 1; jy++)
+		{
+
+			int tempx = xcentre + ix;
+			int tempy = ycentre + jy;
+			if (tempx < maxx && tempx > 0 && tempy < maxy && tempy > 0)
+			{
+
+				int atemp = allcoords[tempx][tempy];
+
+				if (atemp != -1)
+				{
+					frozen[atemp] = 0; //reset the freeze counter
+				}
+			}
+
+		}
+	}
+}
+
 UpdateView()
 {
 
@@ -1992,8 +2012,8 @@ UpdateView()
 						if (solid[celement] != 1 && celement != 16 && celement
 								!= 3) //not wall, eraser, or plant, wind or fuse
 						{
-							if (xc + xm < maxx && xc + xm > 0 && yc + ym < maxy
-									&& yc + ym > 0
+							if (xc + xm < maxx && xc + xm > 1 && yc + ym < maxy
+									&& yc + ym > 1
 									&& allcoords[(int) (xc + xm)][(int) (yc
 											+ ym)] == -1 && rand() % 3 == 1)
 							{
@@ -2002,8 +2022,8 @@ UpdateView()
 						}
 						else if (solid[celement] == 1) //wall or plant or fuse should be drawn solid
 						{
-							if (xc + xm < maxx && xc + xm > 0 && yc + ym < maxy
-									&& yc + ym > 0
+							if (xc + xm < maxx && xc + xm > 1 && yc + ym < maxy
+									&& yc + ym > 1
 									&& allcoords[(int) (xc + xm)][(int) (yc
 											+ ym)] == -1)
 							{
@@ -2012,8 +2032,8 @@ UpdateView()
 						}
 						else if (celement == 16) //wind
 						{
-							if (xc + lmx < maxx && xc + lmx > 0 && yc + lmy
-									< maxy && yc + lmy > 0)
+							if (xc + lmx < maxx && xc + lmx > 1 && yc + lmy
+									< maxy && yc + lmy > 1)
 							{
 								if (allcoords[lmx + xc][lmy + yc] != -1)
 								{
@@ -2031,8 +2051,8 @@ UpdateView()
 						else
 						{ //eraser
 
-							if (xc + xm < maxx && xc + xm > 0 && yc + ym < maxy
-									&& yc + ym > 0
+							if (xc + xm < maxx && xc + xm > 1 && yc + ym < maxy
+									&& yc + ym > 1
 									&& allcoords[(int) (xc + xm)][(int) (yc
 											+ ym)] != -1)
 							{
@@ -2053,15 +2073,24 @@ UpdateView()
 		int counter;
 		int rtop; //used to prevent bugs when fire reaches the top
 
+		int tempx, tempy, ox, oy; //For speed we're going to create temp variables to store stuff
+		int oelement; //these are also used to check to see if the element has changed to do stuff about freezing particles
+
+		//__android_log_write(ANDROID_LOG_INFO, "DemoActivity", "0");
+
 		// Move the particles and do collisions
 		for (counter = 0; counter < TPoints; counter++)
 		{
-			if (set[counter] == 1)
+			if (set[counter] == 1 && frozen[counter] < 4)
 			{
-				int tempx, tempy, ox, oy; //For speed we're going to create temp variables to store stuff
+				//__android_log_write(ANDROID_LOG_INFO, "DemoActivity", "1");
+
+
 				int random = rand();
 				if (element[counter] == 5 && ((random % 7) == 0))
 				{
+
+					unFreezeParticles(x[counter], y[counter]);
 					DeletePoint(counter);
 				}
 				else
@@ -2070,14 +2099,15 @@ UpdateView()
 					ox = (int) x[counter];
 					oldy[counter] = oy;
 					oldx[counter] = ox;
+					oelement = element[counter];
 					if ((int) gravy != 0 && accelcon == 1)
 					{
-						y[counter] += ((gravy / 9.8)
-								* fallvel[element[counter]] + yvel[counter]);
+						y[counter] += ((gravy / 9.8) * fallvel[oelement]
+								+ yvel[counter]);
 					}
 					else if (accelcon == 0)
 					{ // no accelerometer control still needs to have stuff fall
-						y[counter] += fallvel[element[counter]] + yvel[counter];
+						y[counter] += fallvel[oelement] + yvel[counter];
 					}
 					else
 					{
@@ -2085,8 +2115,8 @@ UpdateView()
 					}
 					if ((int) gravx != 0 && accelcon == 1)
 					{
-						x[counter] += ((gravx / 9.8)
-								* fallvel[element[counter]] + xvel[counter]);
+						x[counter] += ((gravx / 9.8) * fallvel[oelement]
+								+ xvel[counter]);
 					}
 					else
 					{
@@ -2094,15 +2124,14 @@ UpdateView()
 					}
 					if (xvel[counter] > 0)
 					{
-						if ((element[counter] == 15 || element[counter] == 21)
-								&& xvel[counter] > 5)
+						if ((oelement == 15 || oelement == 21) && xvel[counter]
+								> 5)
 						{
 							element[counter] = 0; //change particle to sand if the velocity on the wall is great enough							
 							setBitmapColor((int) x[counter], (int) y[counter],
 									0); //Set the color also
 						}
-						else if (element[counter] == 15 || element[counter]
-								== 21)
+						else if (oelement == 15 || oelement == 21)
 						{
 							x[counter] = ox;
 							y[counter] = oy;
@@ -2113,6 +2142,7 @@ UpdateView()
 							xvel[counter] -= 1;
 						}
 					}
+					//element could have changed so don't use olement anymore
 					else if (xvel[counter] < 0)
 					{
 						if ((element[counter] == 15 || element[counter] == 21)
@@ -2295,7 +2325,7 @@ UpdateView()
 							{
 								for (check2 = -2; check2 <= 2; check2++)
 								{
-									if (tempx + check1 > 0 && tempx + check1
+									if (tempx + check1 > 1 && tempx + check1
 											< maxx && tempy + check2 >= 0
 											&& tempy + check2 < maxy)
 									{
@@ -2343,23 +2373,80 @@ UpdateView()
 										element[counter]);
 							}
 						}
+						int atemporary = allcoords[tempx][tempy];
+
+						//__android_log_write(ANDROID_LOG_INFO, "DemoActivity", "start");
 
 						//if the space the particle is trying to move to is taken
-						if (allcoords[tempx][tempy] != -1
-								&& allcoords[tempx][tempy] != counter)
+						if (atemporary != -1 && atemporary != counter)
 						{
-							collide(counter, allcoords[tempx][tempy]); //collision between the two particles
+							//__android_log_write(ANDROID_LOG_INFO, "DemoActivity", "mid1");
+							int secondElementTemp = element[atemporary];
+
+							collide(counter, atemporary); //collision between the two particles
+							//if nothing has changed
+							//__android_log_write(ANDROID_LOG_INFO, "DemoActivity", "mid");
+							if (x[counter] == ox && y[counter] == oy
+									&& element[counter] == oelement
+									&& x[atemporary] == tempx && y[atemporary]
+									== tempy && element[atemporary]
+									== secondElementTemp)
+							{
+								if (element[counter] != 5 && element[counter] //don't freeze these because they need to change after a certain amount of time
+										!= 18)
+								{
+									frozen[counter]++; //increase freeze rounds count
+								}
+
+							}
+							else
+							{
+								//__android_log_write(ANDROID_LOG_INFO, "DemoActivity", "mid2");
+								if (x[counter] != ox || y[counter] != oy
+										|| element[counter] != oelement)
+								{
+									//unFreeze stuff around the primary particle because stuff has changed with it
+									//unFreezeParticles(x[counter],y[counter]);
+									unFreezeParticles(ox, oy);
+								}
+								if (x[atemporary] != tempx || y[atemporary]
+										!= tempy || element[atemporary]
+										!= secondElementTemp)
+								{
+									//unFreeze stuff around the secondary particle because stuff has changed with it
+									//unFreezeParticles(x[atemporary],y[atemporary]);
+									unFreezeParticles(tempx, tempy);
+								}
+								//__android_log_write(ANDROID_LOG_INFO, "DemoActivity", "2");
+							}
 						}
 						else
 						{
-							//Clear the old spot
-							allcoords[ox][oy] = -1;
-							setBitmapColor(ox, oy, 3);
 
-							//Set new spot
-							allcoords[tempx][tempy] = counter;
-							setBitmapColor(tempx, tempy, element[counter]);
+							if (atemporary != counter)
+							{
+
+								//__android_log_write(ANDROID_LOG_INFO, "DemoActivity", "unfreeze stuff");
+								//Clear the old spot
+								allcoords[ox][oy] = -1;
+								setBitmapColor(ox, oy, 3);
+
+								//unfreeze particles around old spot
+
+								unFreezeParticles(ox, oy);
+
+								//Set new spot
+								allcoords[tempx][tempy] = counter;
+								setBitmapColor(tempx, tempy, element[counter]);
+
+								//unFreeze paritlces around new spot
+								//unFreezeParticles( tempx, tempy );
+								//__android_log_write(ANDROID_LOG_INFO, "DemoActivity", "3");
+
+							}
+
 						}
+						//__android_log_write(ANDROID_LOG_INFO, "DemoActivity", "end");
 					}
 				}
 				rtop = 0;

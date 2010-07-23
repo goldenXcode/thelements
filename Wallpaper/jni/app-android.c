@@ -37,7 +37,8 @@ int play = 1;
 int size = 4;
 int lmx;
 int lmy;
-int lmx2;0
+int lmx2;
+
 int lmy2;
 int lmx3;
 int lmy3;
@@ -66,23 +67,17 @@ float gravy = 0; //ygravity (9.8 m/s^2 usually)
 // what type of element each piece of sand is
 int element[TPoints];
 
+//Whether the particle is frozen or not
+char frozen[TPoints];
+
 //what color each element corresponds to
 //           sand,water,wall,eraser,plant,fire,ice,generator,spawn,Oil,Magma,Stone,C4,C4++,fuse,destructable_wall,wind,acid,steam,salt,salt-water,custom 1,mud,3
-unsigned char red[] =
-{ 255, 0, 157, 0, 0, 255, 200, 255, 255, 143, 204, 100, 255, 255, 135, 176, 0,
-		150, 220, 255, 50, 200, 0, 49, 255 };
-unsigned char green[] =
-{ 213, 0, 157, 0, 255, 0, 200, 255, 255, 80, 51, 100, 255, 211, 25, 176, 0,
-		255, 220, 255, 100, 255, 213, 35, 213 };
-unsigned char blue[] =
-{ 85, 255, 157, 0, 0, 0, 255, 255, 255, 80, 0, 100, 143, 115, 30, 164, 0, 50,
-		255, 230, 200, 255, 85, 7, 85 };
+unsigned char red[] = {255, 0, 157, 0, 0, 255, 200, 255, 255, 143, 204, 100, 255, 255, 135, 176, 0, 150, 220, 255, 50, 200, 0, 49, 255};
+unsigned char green[] = {213, 0, 157, 0, 255, 0, 200, 255, 255, 80, 51, 100,255, 211, 25, 176, 0, 255, 220, 255, 100, 255, 213, 35, 213};
+unsigned char blue[] = {85, 255, 157, 0, 0, 0, 255, 255, 255, 80, 0, 100, 143, 115, 30, 164, 0, 50, 255, 230, 200, 255, 85, 7, 85};
 
 //fall velocity of each type
-int
-		fallvel[] =
-		{ 1, 1, 0, 0, 0, -1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, -1, 1, -1, 1, 1, 0,
-				1, 1, 1 };
+int fallvel[] = {1, 1, 0, 0, 0, -1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, -1, 1, -1, 1, 1, 0, 1, 1, 1};
 
 //collision data (LOAD FROM A FILE MAYBE?)
 //-1 -eraser stuff, shouldn't happen
@@ -117,8 +112,7 @@ int
 
 
 //array  of what element the custom element 1 should be in a collision with an element
-int colliseelement1[TElements] =
-{
+int colliseelement1[TElements] = {
 
 //Sand 0
 		0,
@@ -172,9 +166,8 @@ int colliseelement1[TElements] =
 		0 };
 int collision[TElements][TElements] =
 {
-//Sand 0
-		{ 0, 28, 0, -1, 0, 27, 0, 10, 0, 1, 27, 0, 0, 0, 0, 0, -1, 18, 22, 0, 1,
-				0, 0, 0, 0 },
+		//Sand 0
+		{0, 28, 0, -1, 0, 27, 0, 10, 0, 1, 27, 0, 0, 0, 0, 0, -1, 18, 22, 0, 1, 0, 0, 0, 0},
 		//Water 1
 		{ 28, 3, 1, -1, 4, 23, 8, 10, 1, 3, 12, 1, 1, 1, 1, 1, -1, 19, 20, 24,
 				3, 1, 1, 1, 1 },
@@ -263,10 +256,8 @@ int jcounter = 0; //counter for when transfering to Java
 
 int screensize = 0; //0 = zoomed in, 1 = zoomed out
 
-
 //densities of elements
-int density[] =
-{
+int density[] = {
 //Sand:
 		16,
 		//Water:
@@ -318,8 +309,7 @@ int density[] =
 		//Custom 3:
 		16 };
 //is solid?
-int solid[] =
-{
+int solid[] = {
 //Sand:
 		0,
 		//Water:
@@ -371,8 +361,7 @@ int solid[] =
 		//Custom 3:
 		0 };
 //is solid?
-int growing[] =
-{
+int growing[] = {
 //Sand:
 		0,
 		//Water:
@@ -424,8 +413,7 @@ int growing[] =
 		//Custom 3:
 		0 };
 //is condensing?
-int condensing[] =
-{
+int condensing[] = {
 //Sand:
 		-1,
 		//Water:
@@ -477,8 +465,7 @@ int condensing[] =
 		//Custom 3
 		-1 };
 //does it burn stuff like fire?
-int fireburn[] =
-{
+int fireburn[] = {
 //Sand:
 		0,
 		//Water:
@@ -530,8 +517,7 @@ int fireburn[] =
 		//Custom 3
 		0 };
 //how much explosiveness?
-int exploness[] =
-{
+int exploness[] = {
 //Sand:
 		0,
 		//Water:
@@ -608,8 +594,7 @@ static long sTimeOffset = 0;
 static int sTimeOffsetInit = 0;
 static long sTimeStopped = 0;
 
-static long _getTime(void)
-{
+static long _getTime(void) {
 	struct timeval now;
 
 	gettimeofday(&now, NULL);
@@ -625,78 +610,63 @@ void Java_sand_wallpaper_opengl_DemoActivity_nativeInit(JNIEnv* env) //Initializ
 }
 
 void Java_sand_wallpaper_opengl_DemoActivity_nativeResize(JNIEnv* env,
-		jobject thiz, jint w, jint h)
-{
+		jobject thiz, jint w, jint h) {
 	sWindowWidth = w;
 	sWindowHeight = h;
 	if (screensize == 0) //this didn't work before becuase tej used = instead of == (green girdle)
 	{
 		maxx = w / 2;
 		maxy = h / 2;
-	}
-	else
-	{
+	} else {
 		maxx = w;
 		maxy = h;
 	}
 	appInit();
 }
 
-void Java_sand_wallpaper_opengl_DemoActivity_nativeDone(JNIEnv* env)
-{
+void Java_sand_wallpaper_opengl_DemoActivity_nativeDone(JNIEnv* env) {
 	appDeinit();
 	importGLDeinit();
 }
 
 //these two get the gravity from the java code
 Java_sand_wallpaper_opengl_DemoActivity_sendyg(JNIEnv* env, jobject thiz,
-		jfloat ygrav)
-{
+		jfloat ygrav) {
 	gravy = ygrav;
 }
 Java_sand_wallpaper_opengl_DemoActivity_sendxg(JNIEnv* env, jobject thiz,
-		jfloat xgrav)
-{
+		jfloat xgrav) {
 	gravx = -xgrav;
 }
-void Java_sand_wallpaper_opengl_DemoActivity_nativePause(JNIEnv* env)
-{
+void Java_sand_wallpaper_opengl_DemoActivity_nativePause(JNIEnv* env) {
 	sDemoStopped = !sDemoStopped;
-	if (sDemoStopped)
-	{
+	if (sDemoStopped) {
 		/* we paused the animation, so store the current
 		 * time in sTimeStopped for future nativeRender calls */
 		saver(1);
-	}
-	else
-	{
+	} else {
 		/* we resumed the animation, so adjust the time offset
 		 * to take care of the pause interval. */
 		loader(1);
 	}
 }
-void Java_sand_wallpaper_opengl_DemoActivity_quickload(JNIEnv* env)
-{
+void Java_sand_wallpaper_opengl_DemoActivity_quickload(JNIEnv* env) {
 	loader(1);
 }
-void Java_sand_wallpaper_opengl_DemoActivity_quicksave(JNIEnv* env)
-{
+void Java_sand_wallpaper_opengl_DemoActivity_quicksave(JNIEnv* env) {
 	saver(1);
 }
 
 /* Call to render the next GL frame */
-void Java_sand_wallpaper_opengl_DemoActivity_nativeRender(JNIEnv* env)
-{
+void Java_sand_wallpaper_opengl_DemoActivity_nativeRender(JNIEnv* env) {
 	appRender(sWindowWidth, sWindowHeight, colors);
 }
 
-Java_sand_wallpaper_opengl_DemoActivity_setup(JNIEnv* env, jobject thiz)
-{
+Java_sand_wallpaper_opengl_DemoActivity_setup(JNIEnv* env, jobject thiz) {
 	rsetup();
 	return;
 }
-rsetup()
-{
+rsetup() {
 	int j, o, k;
 	loq = TPoints;
 	cpoint = 0;
@@ -704,8 +674,7 @@ rsetup()
 	unsigned char blankred = red[3];
 	unsigned char blankgreen = green[3];
 
-	for (j = 0; j < TPoints; j++)
-	{
+	for (j = 0; j < TPoints; j++) {
 		x[j] = 0;
 		y[j] = 0;
 		xvel[j] = 0;
@@ -716,11 +685,10 @@ rsetup()
 		set[j] = 0;
 		avail[j] = j;
 		spawn[j] = -1;
+		frozen[j] = 0;
 	}
-	for (o = 0; o < 1024; o++)
-	{
-		for (k = 0; k < 512; k++)
-		{
+	for (o = 0; o < 1024; o++) {
+		for (k = 0; k < 512; k++) {
 			allcoords[k][o] = -1; // -1 is empty
 			colors[3 * (k + 512 * o)] = blankred; //0
 			colors[3 * (k + 512 * o) + 1] = blankblue; //0
@@ -729,27 +697,21 @@ rsetup()
 	}
 	return;
 }
-Java_sand_wallpaper_opengl_DemoActivity_jPause(JNIEnv* env, jobject thiz)
-{
+Java_sand_wallpaper_opengl_DemoActivity_jPause(JNIEnv* env, jobject thiz) {
 	play = 0;
 }
-Java_sand_wallpaper_opengl_DemoActivity_Play(JNIEnv* env, jobject thiz)
-{
+Java_sand_wallpaper_opengl_DemoActivity_Play(JNIEnv* env, jobject thiz) {
 	play = 1;
 }
 
 Java_sand_wallpaper_opengl_DemoActivity_setBackgroundColor(JNIEnv* env,
-		jobject thiz, jint colorcode)
-{
-	if (colorcode == 0)
-	{
+		jobject thiz, jint colorcode) {
+	if (colorcode == 0) {
 		red[3] = 0; //3 is eraser
 		blue[3] = 0;
 		green[3] = 0;
 		rsetup();
-	}
-	else if (colorcode == 1)
-	{
+	} else if (colorcode == 1) {
 		red[3] = 255;
 		blue[3] = 255;
 		green[3] = 255;
@@ -758,81 +720,64 @@ Java_sand_wallpaper_opengl_DemoActivity_setBackgroundColor(JNIEnv* env,
 	loader(1);
 }
 Java_sand_wallpaper_opengl_DemoActivity_setexplosiveness(JNIEnv* env,
-		jobject thiz, jint explosiveness)
-{
+		jobject thiz, jint explosiveness) {
 	exploness[22] = explosiveness;
 }
 Java_sand_wallpaper_opengl_DemoActivity_setred(JNIEnv* env, jobject thiz,
-		jint redness)
-{
+		jint redness) {
 	red[22] = redness;
 }
 Java_sand_wallpaper_opengl_DemoActivity_setgreen(JNIEnv* env, jobject thiz,
-		jint greenness)
-{
+		jint greenness) {
 	green[22] = greenness;
 }
 Java_sand_wallpaper_opengl_DemoActivity_setblue(JNIEnv* env, jobject thiz,
-		jint blueness)
-{
+		jint blueness) {
 	blue[22] = blueness;
 }
 Java_sand_wallpaper_opengl_DemoActivity_setFlip(JNIEnv* env, jobject thiz,
-		jint jflipped)
-{
+		jint jflipped) {
 	flipped = jflipped;
 }
 Java_sand_wallpaper_opengl_DemoActivity_setcollision(JNIEnv* env, jobject thiz,
-		jint custnum, jint elementnumb, jint colspot, jint colnum)
-{
-	if (custnum == 1)
-	{
+		jint custnum, jint elementnumb, jint colspot, jint colnum) {
+	if (custnum == 1) {
 		collision[22][colspot] = colnum;
 		colliseelement1[colspot] = elementnumb;
 		collision[colspot][22] = colnum;
-	}
-	else
-	{
+	} else {
 		collision[22][colspot] = colnum;
 		colliseelement1[colspot] = elementnumb;
 		collision[colspot][22] = colnum;
 	}
 	int counter124;
 	char foundfire = 0;
-	for (counter124 = 0; counter124 < TElements; counter124++)
-	{
-		if (collision[22][counter124] == 6)
-		{
+	for (counter124 = 0; counter124 < TElements; counter124++) {
+		if (collision[22][counter124] == 6) {
 			foundfire = 1;
 		}
 	}
-	if (foundfire == 0)
-	{
+	if (foundfire == 0) {
 		fireburn[22] = 0;
-	}
-	else
-	{
+	} else {
 		fireburn[22] = 1;
 	}
 }
 
-Java_sand_wallpaper_opengl_DemoActivity_fd(JNIEnv* env, jobject thiz, jint fstate)
-{
+Java_sand_wallpaper_opengl_DemoActivity_fd(JNIEnv* env, jobject thiz,
+		jint fstate) {
 	//setting finger up or down from onTouch
 
 	fd = fstate;
-	if (fd == 1)
-	{
+	if (fd == 1) {
 		xm = -1;
 	}
 	return;
 }
 Java_sand_wallpaper_opengl_DemoActivity_mp(JNIEnv* env, jobject thiz, jint jxm,
-		jint jym)
-{
+		jint jym) {
 	//setting the mouse position when given stuff from jdk
-	if (xm != -1)
-	{
+	if (xm != -1) {
 		lmx3 = lmx2; //this way we can find difference from 3 frames ago
 		lmy3 = lmy2;
 		lmy2 = lmy;
@@ -854,8 +799,7 @@ Java_sand_wallpaper_opengl_DemoActivity_mp(JNIEnv* env, jobject thiz, jint jxm,
 			int counter;
 			int oldplay = play;
 			play = 0;
-			for (counter = 0; counter <= dist; counter++)
-			{
+			for (counter = 0; counter <= dist; counter++) {
 				ym = yd * counter + lmy;
 				xm = xd * counter + lmx;
 				UpdateView();
@@ -867,106 +811,85 @@ Java_sand_wallpaper_opengl_DemoActivity_mp(JNIEnv* env, jobject thiz, jint jxm,
 	ym = jym;
 	return;
 }
-Java_sand_wallpaper_opengl_DemoActivity_clearquicksave(JNIEnv* env, jobject thiz)
-{
+Java_sand_wallpaper_opengl_DemoActivity_clearquicksave(JNIEnv* env,
+		jobject thiz) {
 	remove("/sdcard/elewallpaper/quicksave.txt");
 	return;
 }
 Java_sand_wallpaper_opengl_DemoActivity_setelement(JNIEnv* env, jobject thiz,
-		jint jelement)
-{
+		jint jelement) {
 	celement = jelement;
 	return;
 }
-int Java_sand_wallpaper_opengl_DemoActivity_getelement(JNIEnv* env, jobject thiz)
-{
+int Java_sand_wallpaper_opengl_DemoActivity_getelement(JNIEnv* env,
+		jobject thiz) {
 	return celement;
 }
 Java_sand_wallpaper_opengl_DemoActivity_setBrushSize(JNIEnv* env, jobject thiz,
-		jint jsize)
-{
+		jint jsize) {
 	size = jsize;
 	return;
 }
-Java_sand_wallpaper_opengl_DemoActivity_setAccelOnOff(JNIEnv* env, jobject thiz,
-		jint state)
-{
+Java_sand_wallpaper_opengl_DemoActivity_setAccelOnOff(JNIEnv* env,
+		jobject thiz, jint state) {
 	accelcon = state;
 	return;
 }
-Java_sand_wallpaper_opengl_DemoActivity_togglesize(JNIEnv* env, jobject thiz)
-{
+Java_sand_wallpaper_opengl_DemoActivity_togglesize(JNIEnv* env, jobject thiz) {
 	if (screensize == 0) //not zoomed in, *2 to zoom out
 	{
 		screensize = 1;
 		maxx = maxx * 2;
 		maxy = maxy * 2;
-	}
-	else
-	{
+	} else {
 		screensize = 0; //zoomed in
 		maxx = maxx / 2;
 		maxy = maxy / 2;
 	}
 }
-int Java_sand_wallpaper_opengl_DemoActivity_save(JNIEnv* env, jobject thiz)
-{
+int Java_sand_wallpaper_opengl_DemoActivity_save(JNIEnv* env, jobject thiz) {
 	return saver(0); //Do a normal save
 }
-int saver(int type)
-{
+int saver(int type) {
 	FILE *fp;
 	if (type == 0) //If it's a normal save
 	{
 		fp = fopen("/sdcard/elewallpaper/save.txt", "w");
-	}
-	else if (type == 1) //If it's a quicksave (it's being paused)
+	} else if (type == 1) //If it's a quicksave (it's being paused)
 	{
 		fp = fopen("/sdcard/elewallpaper/quicksave.txt", "w");
 	}
-	if (fp != NULL)
-	{
+	if (fp != NULL) {
 		int counter, added_to_file = 0;
-		for (counter = 0; counter < TPoints; counter++)
-		{
-			if (set[counter] == 1)
-			{
+		for (counter = 0; counter < TPoints; counter++) {
+			if (set[counter] == 1) {
 				fprintf(fp, "%d %d %d %d ", spawn[counter], (int) x[counter],
 						(int) y[counter], element[counter]); //Save the spawn, x y, and element of each current point
 				added_to_file = 1;
 			}
 		}
 		fclose(fp);
-		if (added_to_file == 0)
-		{
-			if (type == 0)
-			{
+		if (added_to_file == 0) {
+			if (type == 0) {
 				remove("/sdcard/elewallpaper/save.txt");
-			}
-			else if (type == 1)
-			{
+			} else if (type == 1) {
 				remove("/sdcard/elewallpaper/quicksave.txt");
 			}
 		}
 		return 1; //success
-	}
-	else
-	{
+	} else {
 		return 0; //error: didn't open file, prolly sdcard not there
 	}
 }
-int Java_sand_wallpaper_opengl_DemoActivity_load(JNIEnv* env, jobject thiz)
-{
+int Java_sand_wallpaper_opengl_DemoActivity_load(JNIEnv* env, jobject thiz) {
 	return loader(0); // call the load function, normal load
 }
-int loader(int type)
-{
+int loader(int type) {
 	FILE *fp;
 	if (type == 0) //normal load
 	{
 		fp = fopen("/sdcard/elewallpaper/save.txt", "r");
-	}
-	else if (type == 1) //quickload
+	} else if (type == 1) //quickload
 	{
 		fp = fopen("/sdcard/elewallpaper/quicksave.txt", "r");
 	}
@@ -977,10 +900,8 @@ int loader(int type)
 	int loadelement;
 	int spawnv;
 
-	if (fp != NULL)
-	{
-		while (!feof(fp))
-		{
+	if (fp != NULL) {
+		while (!feof(fp)) {
 			fscanf(fp, "%d%d%d%d", &spawnv, &xcoordinate, &ycoordinate,
 					&loadelement);
 			spawn[avail[loq - 1]] = spawnv;
@@ -991,8 +912,7 @@ int loader(int type)
 		return 1;
 	}
 }
-Java_sand_wallpaper_opengl_DemoActivity_loaddemo(JNIEnv* env, jobject thiz)
-{
+Java_sand_wallpaper_opengl_DemoActivity_loaddemo(JNIEnv* env, jobject thiz) {
 	FILE *fp;
 	fp = fopen("/sdcard/save2.txt", "r");
 	rsetup();
@@ -1002,10 +922,8 @@ Java_sand_wallpaper_opengl_DemoActivity_loaddemo(JNIEnv* env, jobject thiz)
 	int loadelement;
 	int spawnv;
 
-	if (fp != NULL)
-	{
-		while (!feof(fp))
-		{
+	if (fp != NULL) {
+		while (!feof(fp)) {
 			fscanf(fp, "%d%d%d%d", &spawnv, &xcoordinate, &ycoordinate,
 					&loadelement);
 			spawn[avail[loq - 1]] = spawnv;
@@ -1014,63 +932,49 @@ Java_sand_wallpaper_opengl_DemoActivity_loaddemo(JNIEnv* env, jobject thiz)
 
 		fclose(fp);
 		return 1;
-	}
-	else
-	{
+	} else {
 		return 0;
 	}
 }
-Java_sand_wallpaper_opengl_DemoActivity_loadcustom(JNIEnv* env, jobject thiz)
-{
+Java_sand_wallpaper_opengl_DemoActivity_loadcustom(JNIEnv* env, jobject thiz) {
 	FILE *fp;
 	fp = fopen("/sdcard/customele.txt", "r");
 	rsetup();
 	int i;
 	int collisiondata;
 
-	if (fp != NULL)
-	{
-		for (i = 0; i < TElements; i++)
-		{
+	if (fp != NULL) {
+		for (i = 0; i < TElements; i++) {
 			fscanf(fp, "%d", &collisiondata);
 			colliseelement1[i] = collisiondata;
 		}
-		for (i = 0; i < TElements; i++)
-		{
+		for (i = 0; i < TElements; i++) {
 			fscanf(fp, "%d", &collisiondata);
 			collision[22][i] = collisiondata;
 		}
 
 		fclose(fp);
 		return 1;
-	}
-	else
-	{
+	} else {
 		return 0;
 	}
 }
-Java_sand_wallpaper_opengl_DemoActivity_savecustom(JNIEnv* env, jobject thiz)
-{
+Java_sand_wallpaper_opengl_DemoActivity_savecustom(JNIEnv* env, jobject thiz) {
 
 	FILE *fp;
 	int i;
 	fp = fopen("/sdcard/elewallpaper/customele.txt", "w");
 
-	if (fp != NULL)
-	{
-		for (i = 0; i < TElements; i++)
-		{
+	if (fp != NULL) {
+		for (i = 0; i < TElements; i++) {
 			fprintf(fp, "%d", colliseelement1[i]);
 		}
-		for (i = 0; i < TElements; i++)
-		{
+		for (i = 0; i < TElements; i++) {
 			fprintf(fp, "%d", collision[22][i]);
 		}
 		fclose(fp);
 		return 1;
-	}
-	else
-	{
+	} else {
 		return 0;
 	}
 }
