@@ -19,10 +19,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 	{
 		super.onCreate(savedInstanceState);
 		
+		getPreferenceManager().setSharedPreferencesName("TheElementsPrefs");
+		
 		//Set the preference screen created by createPreferenceHierarchy()
 		setPreferenceScreen(createPreferenceHierarchy());
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-		getPreferenceManager().setSharedPreferencesName("TheElementsPrefs");
 	}
 	
 	//Function to set up the preferences
