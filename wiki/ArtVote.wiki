@@ -1,4 +1,5 @@
 #summary Vote on possibly included artwork
+#labels Phase-Design
 
 = Introduction =
 
@@ -6,6 +7,13 @@ Add any of your original artwork to the "Art" section along with a unique name, 
 
 = Art =
 
-Nothing here yet.
+Newart.png -- New background made by Youanden with his simulator that he wrote.
 
 = Votes =
+
+Newart:
+
+Ryan - I think it's a bit too blue, I would prefer a more white or black theme, I like the bottom IDKJava logo though.  I'm impressed with the simulator though.
+
+Dan - The artwork is good but I'm not sure it fits this program. The backround looks more like a fractal than what occurs in the game. Some rounding of the corners on the buttons and button shading would also be nice.
+Just an opinion
