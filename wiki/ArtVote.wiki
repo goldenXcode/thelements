@@ -17,3 +17,5 @@ Ryan - I think it's a bit too blue, I would prefer a more white or black theme, 
 
 Dan - The artwork is good but I'm not sure it fits this program. The backround looks more like a fractal than what occurs in the game. Some rounding of the corners on the buttons and button shading would also be nice.
 Just an opinion
+
+Conclusion - We like your artwork, it just needs to be modified a little to fit our app better. One thing we particularly liked was your IDKJava logo at the bottom. Slight rounding of buttons and slight shading as well on the buttons would greatly improve them. The background also should be more like what occurs in the actual game, though it doesn't have to be exactly from the game as we have currently.
