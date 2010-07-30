@@ -5,7 +5,7 @@
 
 This is a list of things we would like to accomplish for this application.  Don't edit this unless you are a project member.  Suggestions go on the Requests page.
 
-=Programming=
+= Programming =
 
 -Add in optimization for collision calculation.  Particles should be put into frozen mode and not calculated if they have been inactive for 10 frames in a row ( this could also be optimized ).  Unfreeze any particles around a particle that has changed state, by either moving or any other action.  This should avoid unnecessary collision calculation.
 
@@ -17,10 +17,16 @@ This is a list of things we would like to accomplish for this application.  Don'
 
 -Add in black-holes.
 
-=Art=
+-Finish adding in server functionality
+
+= Art =
 
 -Make new button for eraser, the "X" is unclear that it is the eraser.
 
 -Create button images for main menu.
+
+= Other =
+
+-Raise enough money to buy a server to host save uploading and downloading
 
 -Create new backgrounds for main menu and loading.
