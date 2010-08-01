@@ -8,6 +8,7 @@ Add any of your original artwork to the "Art" section along with a unique name, 
 = Art =
 
 Newart.png -- New background made by Youanden with his simulator that he wrote.
+Whiter.png -- Main Menu re-themed by Youanden with a whiter color set. 
 
 = Votes =
 
@@ -19,3 +20,7 @@ Dan - The artwork is good but I'm not sure it fits this program. The backround l
 Just an opinion
 
 Conclusion - We like your artwork, it just needs to be modified a little to fit our app better. One thing we particularly liked was your IDKJava logo at the bottom. Slight rounding of buttons and slight shading as well on the buttons would greatly improve them. The background also should be more like what occurs in the actual game, though it doesn't have to be exactly from the game as we have currently.
+
+Whiter:
+
+Ryan-  I like it, it may not look like our game but I like how it looks and how professional it appears.  I would give it the go-ahead for a release soon, what do you guys think.  Not really related, but how hard would it be to make an iconified interface for the main screen?  By that I mean that each option be arranged in a grid and would be a square, similar to the app drawer on the home screen. I think that would also look pretty cool. 
