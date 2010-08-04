@@ -12,9 +12,9 @@
 		limitations under the License. */
 	-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="sand.wallpaper.opengl" android:versionName="1.2" android:versionCode="43">
+	package="sand.wallpaper.opengl" android:versionName="1.10" android:versionCode="45">
 
-	<uses-sdk android:minSdkVersion="4"/>
+	<uses-sdk android:minSdkVersion="7" />
 	<uses-feature android:name="android.software.live_wallpaper" />
     
 
