@@ -25,31 +25,6 @@ import android.view.MotionEvent;
 
 public class DemoActivity extends GLWallpaperService implements SensorListener
 {
-	class DemoRenderer implements GLWallpaperService.Renderer
-	{
-		public void onDrawFrame(GL10 gl)
-		{
-			nativeRender(); // Actual rendering - everything happens here
-		}
-
-		public void onSurfaceChanged(GL10 gl, int w, int h)
-		{
-			nativeResize(w, h);
-			//Load the demo from sdcard on first run
-			if (DemoActivity.loaddemov == true)
-			{
-				DemoActivity.loaddemo();
-				DemoActivity.loaddemov = false;
-			}
-		}
-
-		public void onSurfaceCreated(GL10 gl, EGLConfig config)
-		{
-			nativeInit();
-		}
-
-	}
-
 	class SandView extends GLEngine
 	{
 		private int fd; // Set the "finger down" variable
@@ -184,10 +159,6 @@ public class DemoActivity extends GLWallpaperService implements SensorListener
 	public native static void setup();
 	public native static void tester();
 	public native static void togglesize();
-	
-	private native void nativeInit();
-	private native void nativeRender();
-	private native void nativeResize(int w, int h);
 
 	Random generator = new Random();
 
@@ -264,4 +235,32 @@ public class DemoActivity extends GLWallpaperService implements SensorListener
 			}
 		}
 	}
+}
+
+class DemoRenderer implements GLWallpaperService.Renderer
+{
+	public void onDrawFrame(GL10 gl)
+	{
+		nativeRender(); // Actual rendering - everything happens here
+	}
+
+	public void onSurfaceChanged(GL10 gl, int w, int h)
+	{
+		nativeResize(w, h);
+		//Load the demo from sdcard on first run
+		if (DemoActivity.loaddemov == true)
+		{
+			DemoActivity.loaddemo();
+			DemoActivity.loaddemov = false;
+		}
+	}
+
+	public void onSurfaceCreated(GL10 gl, EGLConfig config)
+	{
+		nativeInit();
+	}
+
+    private static native void nativeInit(); //Jni init
+    private static native void nativeResize(int w, int h); //Jni resize
+    private static native void nativeRender(); //Jni rendering function - everything happens here
 }
