@@ -151,7 +151,7 @@ public class DemoActivity extends GLWallpaperService implements SensorListener
 
 	static
 	{
-		System.loadLibrary("sanangeles"); // Load the JNI library
+		System.loadLibrary("thelements"); // Load the JNI library
 	}
 
 	// JNI functions
