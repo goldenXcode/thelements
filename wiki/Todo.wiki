@@ -7,7 +7,7 @@ This is a list of things we would like to accomplish for this application.  Don'
 
 = Programming =
 
-*CURRENT - Fix up the freezing particle optimization so that it works correctly and release the update. We've done major changes, so that should boost people's opinions a bunch, plus I think the custom element force close is fixed, so this update should work wonders on our ratings*
+*CURRENT - Fix up optimization code. Clean up code too.*
 
 -Add in optimization for collision calculation.  Particles should be put into frozen mode and not calculated if they have been inactive for 10 frames in a row ( this could also be optimized ).  Unfreeze any particles around a particle that has changed state, by either moving or any other action.  This should avoid unnecessary collision calculation.
 
