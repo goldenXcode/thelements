@@ -36,18 +36,18 @@ unsigned char colors[TPixels*3]; // 3 bytes per pixel
 float x[TPoints];
 float y[TPoints];
 //Old coordinates (for collision resolving)
-int oldx[TPoints];
-int oldy[TPoints];
+short int oldx[TPoints];
+short int oldy[TPoints];
 //Velocities
-int xvel[TPoints];
-int yvel[TPoints];
+short int xvel[TPoints];
+short int yvel[TPoints];
 
 //Element type
-int element[TPoints];
+char element[TPoints];
 //Frozen state
 char frozen[TPoints];
 //Spawn type
-int spawn[TPoints];
+char spawn[TPoints];
 
 //RGB properties
 unsigned char red[TElements];
@@ -75,9 +75,9 @@ int colliseelement1[TCollision];
 int collision[TElements][TElements];
 
 //Index set state
-int set[TPoints];
+char set[TPoints];
 //Index available state
-int avail[TPoints];
+short int avail[TPoints];
 
 //Location in avail array
 int loq;
