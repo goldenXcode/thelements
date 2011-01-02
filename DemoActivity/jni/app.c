@@ -1,30 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
  * app.c
  * -------------------------
@@ -124,6 +97,7 @@ int flipped;
 int maxx;
 int maxy;
 
+char shouldClear = 0;
 // A map of all the coordinates on the screen
 int allcoords[WIDTH][HEIGHT];
 
@@ -141,7 +115,7 @@ char username[8];
 char password[8];
 char userlength;
 char passlength;
-char buffer[3 + 1 + (2 * TPoints * 4) + 200];
+char buffer[ 1/*3 + 1 + (2 * TPoints * 4) + 200*/];
 int bufferlength;
 
 //Error variable

@@ -76,6 +76,8 @@ extern int fireburn[TElements];
 //Explosiveness property
 extern int exploness[TElements];
 
+extern char shouldClear;
+
 //Custom element collision data
 extern int colliseelement1[TCollision];
 
@@ -122,7 +124,7 @@ extern char username[8];
 extern char password[8];
 extern char userlength;
 extern char passlength;
-extern char buffer[3 + 1 + (2 * TPoints * 4) + 200];
+extern char buffer[ 1/*3 + 1 + (2 * TPoints * 4) + 200*/];
 extern int bufferlength;
 
 //Error variable

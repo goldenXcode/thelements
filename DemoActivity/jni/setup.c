@@ -10,7 +10,7 @@
 void rsetup()
 {
 	int j, o, k;
-	loq = TPoints;
+	loq = TPoints-1;
 	cpoint = 0;
 	//size = 4;  if size stuff is failing this may need to be uncommented
 	unsigned char blankred = red[3];
@@ -19,8 +19,8 @@ void rsetup()
 
 	for (j = 0; j < TPoints; j++)
 	{
-		x[j] = 0;
-		y[j] = 0;
+		x[j] = -1;
+		y[j] = -1;
 		xvel[j] = 0;
 		yvel[j] = 0;
 		element[j] = 0;

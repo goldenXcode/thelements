@@ -18,6 +18,8 @@
 #include "points.h"
 //Include the collision function
 #include "collide.h"
+//Include the clear funtion (rsetup)
+#include "setup.h"
 
 void UpdateView(void);
 

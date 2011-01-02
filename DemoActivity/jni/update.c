@@ -10,6 +10,11 @@
 
 void UpdateView(void)
 {
+	if (shouldClear)
+	{
+		rsetup();
+		shouldClear = 0;
+	}
 	//If the finger is down
 	if (fd == 1)
 	{

@@ -85,7 +85,7 @@ void Java_sand_falling_opengl_DemoRenderer_nativeRender(JNIEnv* env)
 
 void Java_sand_falling_opengl_MainActivity_setup(JNIEnv* env, jobject thiz)
 {
-	rsetup();
+	shouldClear = 1;
 }
 
 void Java_sand_falling_opengl_MainActivity_jPause(JNIEnv* env, jobject thiz)

@@ -417,13 +417,12 @@ public class MainActivity extends Activity
 				if (play)
 				{
 					jPause();
-					play = false;
 				}
 				else
 				{
 					Play();
-					play = true;
 				}
+				play = !play;
 				return true;
 			case R.id.eraser:
 	
