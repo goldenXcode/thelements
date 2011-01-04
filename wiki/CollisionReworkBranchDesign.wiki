@@ -1,0 +1,66 @@
+#summary Ideas for the CollisionRework Branch
+#labels Phase-Design
+
+==Arrays==
+Global arrays.
+
+{{{
+heat[TPoints]; //0-10, changes based on atmospheric heat and collisions
+fallspeed[TPoints/TElements?]; //Overall fall speed = fallspeed[e]*atmosphereGrav
+life[TPoints/TElements?]; //Frames before element deletion (possibly not needed)
+state[TElements]; //0=solid, 1=liquid, 2=gas
+special[TElements]; //Indexed special effects occurring every frame
+specialval[TPoints]; //The value per point that is possibly used in special effects
+density[TElements]; //0-10, density of the element
+
+//Self explanatory
+xvel[TPoints];
+yvel[TPoints];
+x[TPoints];
+y[TPoints];
+
+//An array of all pixels
+allcoords[width][height];
+
+//Predefined collision array
+collisions[TElements][TElements];
+}}}
+
+==Atmosphere==
+Defines the environment in which the reactions take place. Stored in a file with a .atm extension. Can be selected during play.
+
+{{{
+heat; //The temperature of the surroundings
+gravity; //-1 - 1, the multiplier for fall speed
+walled; //Whether elements can fall through the edges or not
+name; //The name given to the atmosphere
+}}}
+
+==Custom Elements==
+Users can create custom elements and save them to files with .ele extensions, to be loaded dynamically at runtime (and also downloaded, emailed, etc).
+
+*Input:*
+Overall:
+  *`name`
+Solid state:
+  *`state = 0;`
+  *`density`
+  *`special`
+  *`fallspeed`
+  *RGB sliders
+Melting point:
+  *`heat`
+Liquid state:
+  *`state = 1;`
+  *`density`
+  *`special`
+  *`fallspeed`
+  *RGB sliders
+Vaporizing point:
+  *`heat`
+Gaseous state:
+  *`state = 2;`
+  *`density`
+  *`special`
+  *`fallspeed`
+  *RGB sliders
