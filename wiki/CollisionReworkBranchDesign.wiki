@@ -39,7 +39,7 @@ name; //The name given to the atmosphere
 ==Custom Elements==
 Users can create custom elements and save them to files with .ele extensions, to be loaded dynamically at runtime (and also downloaded, emailed, etc).
 
-*Input:*
+===Input:===
 Overall:
   *`name`
 Solid state:
