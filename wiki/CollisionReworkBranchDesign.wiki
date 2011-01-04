@@ -64,3 +64,10 @@ Gaseous state:
   *`special`
   *`fallspeed`
   *RGB sliders
+
+==File Structure==
+/sdcard/thelements - root
+/sdcard/thelements/elements - custom elements folder, all .ele files to be loaded go in here
+/sdcard/thelements/atmospheres - all created .atm files go here to be offered during atmosphere selection
+/sdcard/thelements/saves - .sav files are placed in here with date and time in the filename, i.e. 2011-01-04-12:26:00.sav
+/sdcard/thelements/app - all files used by the app are placed in here - demo.sav, etc.
