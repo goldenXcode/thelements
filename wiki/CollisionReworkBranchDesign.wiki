@@ -30,15 +30,25 @@ collisions[TElements][TElements];
 Defines the environment in which the reactions take place. Stored in a file with a .atm extension. Can be selected during play.
 
 {{{
-heat; //The temperature of the surroundings
-gravity; //-1 - 1, the multiplier for fall speed
-walled; //Whether elements can fall through the edges or not
-name; //The name given to the atmosphere
-red, green, blue; //The RGB color of the background, this color is then applied to the eraser
+struct Atmosphere
+{
+    heat; //The temperature of the surroundings
+    gravity; //-1 - 1, the multiplier for fall speed
+    walled; //Whether elements can fall through the edges or not
+    name; //The name given to the atmosphere
+    red, green, blue; //The RGB color of the background, this color is then applied to the eraser
+};
 }}}
 
 ==Custom Elements==
 Users can create custom elements and save them to files with .ele extensions, to be loaded dynamically at runtime (and also downloaded, emailed, etc).
+
+{{{
+struct CustomElement
+{
+    //Stuff goes in here
+};
+}}}
 
 ===Input:===
 Overall:
