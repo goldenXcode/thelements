@@ -52,29 +52,29 @@ struct CustomElement
 
 ===Input:===
 Overall:
-  *name
+  * name
 Solid state:
-  *state = 0;
-  *density
-  *special
-  *fallspeed
-  *RGB sliders
+  * state = 0;
+  * density
+  * special
+  * fallspeed
+  * RGB sliders
 Melting point:
-  *heat
+  * heat
 Liquid state:
-  *state = 1;
-  *density
-  *special
-  *fallspeed
-  *RGB sliders
+  * state = 1;
+  * density
+  * special
+  * fallspeed
+  * RGB sliders
 Vaporizing point:
-  *heat
+  * heat
 Gaseous state:
-  *state = 2;
-  *density
-  *special
-  *fallspeed
-  *RGB sliders
+  * state = 2;
+  * density
+  * special
+  * fallspeed
+  * RGB sliders
 
 ==File Structure==
   */sdcard/thelements - root
