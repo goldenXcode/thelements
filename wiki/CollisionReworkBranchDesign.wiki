@@ -52,28 +52,28 @@ struct CustomElement
 
 ===Input:===
 Overall:
-  *`name`
+  *name
 Solid state:
-  *`state = 0;`
-  *`density`
-  *`special`
-  *`fallspeed`
+  *state = 0;
+  *density
+  *special
+  *fallspeed
   *RGB sliders
 Melting point:
-  *`heat`
+  *heat
 Liquid state:
-  *`state = 1;`
-  *`density`
-  *`special`
-  *`fallspeed`
+  *state = 1;
+  *density
+  *special
+  *fallspeed
   *RGB sliders
 Vaporizing point:
-  *`heat`
+  *heat
 Gaseous state:
-  *`state = 2;`
-  *`density`
-  *`special`
-  *`fallspeed`
+  *state = 2;
+  *density
+  *special
+  *fallspeed
   *RGB sliders
 
 ==File Structure==
@@ -81,4 +81,4 @@ Gaseous state:
   */sdcard/thelements/elements - custom elements folder, all .ele files to be loaded go in here
   */sdcard/thelements/atmospheres - all created .atm files go here to be offered during atmosphere selection
   */sdcard/thelements/saves - .sav files are placed in here with date and time in the filename, i.e. 2011-01-04-12:26:00.sav
-  */sdcard/thelements/app - all files used by the app are placed in here - demo.sav, etc.
+  */sdcard/thelements/app - all files used by the app are placed in here - nothing right now
