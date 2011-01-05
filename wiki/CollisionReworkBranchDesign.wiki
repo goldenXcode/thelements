@@ -34,6 +34,7 @@ heat; //The temperature of the surroundings
 gravity; //-1 - 1, the multiplier for fall speed
 walled; //Whether elements can fall through the edges or not
 name; //The name given to the atmosphere
+red, green, blue; //The RGB color of the background, this color is then applied to the eraser
 }}}
 
 ==Custom Elements==
