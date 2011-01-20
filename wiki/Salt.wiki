@@ -1,0 +1,4 @@
+#summary This is a help file for the Salt element
+= Salt =
+
+Salt is a solid particle that can be used to melt ice. When salt comes into contact with water it will create... salt water.
