@@ -1,4 +1,4 @@
-#summary This is a help file for the Generator Tool
+#summary This is a help file for the Generator element
 = Generator =
 
 The generator element creates particles. Once you have placed it where you want it, the generator waits for a particle to hit it. When this happens, the generator "sets" itself to that particle type and will start creating those particles. Any Generator around it will also get set to this particle type.
