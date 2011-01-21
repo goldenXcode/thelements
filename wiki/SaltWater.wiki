@@ -2,4 +2,4 @@
 
 = Salt Water =
 
-Salt water can produced in one of two ways. First you can draw it on the screen just like regular water. Secondly, you can mix the Salt element with the Water element. Salt Water floats on Oil and sinks in Water. When it comes into contact with Fire or Magma, it will evaporate and create Steam. Salt will also melt Ice and kill Plant.
+Salt water can produced in one of two ways. First you can draw it on the screen just like regular water. Secondly, you can mix the [Salt] element with the Water element. Salt Water floats on Oil and sinks in Water. When it comes into contact with Fire or Magma, it will evaporate and create Steam. Salt will also melt Ice and kill Plant.
