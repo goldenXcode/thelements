@@ -2,4 +2,4 @@
 
 = Oil =
 
-Oil is a highly flammable particle that acts like a liquid. Oil floats on Water. When Oil comes into contact with Fire or Magma it will ignite.
+Oil is a highly flammable particle that acts like a liquid. Oil floats on Water and [SaltWater]. When Oil comes into contact with Fire or Magma it will ignite.
