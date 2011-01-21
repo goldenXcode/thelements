@@ -1,0 +1,5 @@
+#summary This is a help file for the Ice element.
+
+= ICE =
+
+Ice is the frozen state of Water. Ice does not move when it is placed on the screen. Ice can be melted into Water by [Salt], [SaltWater], [Magma], and [Fire]. The latter two also create [Steam] during the process. When Ice touches Water it will turn it into more ice.
