@@ -1,0 +1,5 @@
+#summary This is a help file for the Oil element.
+
+= Oil =
+
+Oil is a highly flammable particle that acts like a liquid. Oil floats on Water. When Oil comes into contact with Fire or Magma it will ignite.
