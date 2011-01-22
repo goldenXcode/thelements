@@ -1,0 +1,5 @@
+#summary This is a help file for the C4 element.
+
+= C4 =
+
+When all else fails, blow it up! C4 has one purpose, making things go boom. To accomplish this, simply choose it in the element selector, and paint it onto the screen. After that, connect a [Fuse] or apply [Magma] or [Fire]. When playing with C4, please take care not to blow off your finger.
