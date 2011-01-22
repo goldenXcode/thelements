@@ -3,4 +3,4 @@
 
 The generator element creates particles. Once you have placed it where you want it, the generator waits for a particle to hit it. When this happens, the generator "sets" itself to that particle type and will start creating those particles. Any Generator around it will also get set to this particle type.
 
-For example: Let's say you want to have a constant flow of water. Simply pick a spot on your screen, place a generator, and then sprinkle some water on it. When the water hits the generator, it will begin producing an endless flow of water particles. 
+For example: Let's say you want to have a constant flow of [Water]. Simply pick a spot on your screen, place a generator, and then sprinkle some [Water] on it. When the [Water] hits the generator, it will begin producing an endless flow of [Water] particles. 
