@@ -2,4 +2,4 @@
 
 = Steam =
 
-When Water gets to hot it turns into steam and begins to rise. This occurs when Water comes into contact with Fire or Magma. Steam always rises. Steam will eventually begin to cool and turn back into Water.
+When [Water] gets to hot it turns into [Steam] and begins to rise. This occurs when [Water] comes into contact with [Fire] or [Magma]. [Steam] always rises. Steam will eventually begin to cool and turn back into [Water].
