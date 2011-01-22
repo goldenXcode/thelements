@@ -1,0 +1,5 @@
+#summary This is a help file for the Sand element.
+
+= Sand =
+
+Sand is one of the original two particles in the game. Sand can be placed with the element selector or created by combining [Plant] with [Salt] or [SaltWater]. When sand comes into contact with [Magma] it will create [Glass]. You can create some interesting textures by throwing some sand into a [Magma] fall. As the sand drifts through the falling [Magma], the particles will turn to [Glass] at different times creating small ramps and staircases.
