@@ -1,0 +1,5 @@
+#summary This is a help file for the Mud element.
+
+= Mud =
+
+Mud has a few interesting properties. First, it sinks and settles to the bottom in a body of Water. Second, when it comes into contact with [Magma], it will burn off creating [Stone] and [Steam].
