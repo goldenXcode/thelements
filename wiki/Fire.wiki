@@ -2,4 +2,4 @@
 
 = Fire =
 
-Fire is a short lived particle that burns other particles. Fire always goes up. When it comes into contact with Water it creates [Steam]. It makes short work of Plant and [Fuse].
+Fire is a short lived particle that burns other particles. Fire always goes up. When it comes into contact with [Water] it creates [Steam]. It makes short work of [Plant] and [Fuse].
