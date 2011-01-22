@@ -2,4 +2,4 @@
 
 = Magma =
 
-Magma is an extremely hot particle that acts like a liquid. Magma has a lot of fun reactions. When combined with Water it creates [Steam] and [Stone]. When combined with Sand it creates [Glass]. When combined with [Mud], it produces [Stone] and [Steam]. It also works very well as an ignition device for [Fuse].
+Magma is an extremely hot particle that acts like a liquid. Magma has a lot of fun reactions. When combined with [Water] it creates [Steam] and [Stone]. When combined with [Sand] it creates [Glass]. When combined with [Mud], it produces [Stone] and [Steam]. It also works very well as an ignition device for [Fuse].
