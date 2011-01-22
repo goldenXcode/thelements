@@ -17,7 +17,6 @@ public class Splash extends Activity
 		new Handler().postDelayed(
 				new Runnable()
 				{
-					@Override
 					public void run()
 					{
 						//Create an Intent to start DemoActivity

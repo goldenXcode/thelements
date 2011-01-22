@@ -76,7 +76,10 @@ void Java_sand_falling_opengl_MainActivity_quickSave(JNIEnv* env)
 {
 	saver(1);
 }
-
+int Java_sand_falling_opengl_MainActivity_getFPS( JNIEnv* env )
+{
+	return FPS;
+}
 /* Call to render the next GL frame */
 void Java_sand_falling_opengl_DemoRenderer_nativeRender(JNIEnv* env)
 {

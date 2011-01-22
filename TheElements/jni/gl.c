@@ -9,6 +9,12 @@
 
 static unsigned int textureID;
 
+
+struct timeval aTimeval;
+struct timezone tz;
+static long sTime = 0;
+static long fTime = 0;
+
 // Called from the app framework. is onSurfaceCreated
 void appInit()
 {
@@ -53,6 +59,10 @@ void appDeinit()
  */
 void appRender()
 {
+	sTime = fTime;
+	gettimeofday(&aTimeval,&tz);
+	fTime = aTimeval.tv_usec;
+	FPS = (1000000/(fTime-sTime));
 	float vertices[] =
 	{ 0.0f, 0.0f, 512.0f, 0.0f, 0.0f, 1024.0f, 512.0f, 1024.0f };
 

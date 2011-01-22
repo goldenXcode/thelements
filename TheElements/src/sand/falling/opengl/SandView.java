@@ -62,6 +62,7 @@ public class SandView extends GLSurfaceView
 
 class DemoRenderer implements GLSurfaceView.Renderer
 {
+	
     public void onSurfaceCreated(GL10 gl, EGLConfig config)
     {
         nativeInit();
@@ -82,6 +83,7 @@ class DemoRenderer implements GLSurfaceView.Renderer
     {
 		nativeRender(); //Actual rendering - everything happens here
     }
+    
 
     private static native void nativeInit(); //Jni init
     private static native void nativeResize(int w, int h); //Jni resize

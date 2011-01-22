@@ -110,6 +110,7 @@ public class MainActivity extends Activity
 		{
 			sendXGrav(event.values[0]);
 			sendYGrav(event.values[1]);
+			menu_bar.updateFPS(getFPS());
 		}
 
 		public void onAccuracyChanged(Sensor sensor, int accuracy)
@@ -497,6 +498,7 @@ public class MainActivity extends Activity
 	public native static void setPassword ( char[] password);
 	public native static boolean login();
 	public native static boolean register();
+	public native static int getFPS();
 
 	static
 	{

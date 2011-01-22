@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -15,7 +16,7 @@ public class MenuBar extends LinearLayout
 	
 	private Context context;
 	
-	static ImageButton eraser_button;
+	static /*Image*/Button eraser_button;
 	static ImageButton play_pause_button;
 	private ImageButton save_button;
 	private ImageButton load_button;
@@ -48,19 +49,25 @@ public class MenuBar extends LinearLayout
 	{}
 	public static void seteraseroff()
 	{
-		eraser_button.setImageResource(R.drawable.eraser);
+		//eraser_button.setImageResource(R.drawable.eraser);
 		
 		eraser_on = false;
 		MainActivity.setElement(temp_element);
 		
 	}
-
+	public void updateFPS(long FPS)
+	{
+		if ( eraser_button != null )
+		{
+			eraser_button.setText(""+FPS);
+		}
+	}
 	//Called when it's finished inflating the XML layout
 	@Override
 	protected void onFinishInflate()
 	{
 		//Set up all the variables for the objects
-		eraser_button = (ImageButton) findViewById(R.id.eraser_button);
+		eraser_button = (/*Image*/Button) findViewById(R.id.eraser_button);
 		play_pause_button = (ImageButton) findViewById(R.id.play_pause_button);
 		save_button = (ImageButton) findViewById(R.id.save_button);
 		load_button = (ImageButton) findViewById(R.id.load_button);
@@ -72,7 +79,7 @@ public class MenuBar extends LinearLayout
 		(
 			new OnClickListener()
 			{
-				@Override
+
 				public void onClick(View v)
 				{
 					//If it was on eraser, swap back to regular element
@@ -82,7 +89,7 @@ public class MenuBar extends LinearLayout
 						MainActivity.setElement(temp_element);
 						
 						//Change the button to look unclicked
-						eraser_button.setImageResource(R.drawable.eraser);
+						//eraser_button.setImageResource(R.drawable.eraser);
 					}
 					//If it is on a normal element, go to eraser and store that element for later
 					else
@@ -92,7 +99,7 @@ public class MenuBar extends LinearLayout
 						MainActivity.setElement(3);
 						
 						//Change the button to look clicked
-						eraser_button.setImageResource(R.drawable.eraser_on);
+						//eraser_button.setImageResource(R.drawable.eraser_on);
 					}
 				}
 			}
@@ -100,12 +107,12 @@ public class MenuBar extends LinearLayout
 		if(MainActivity.getElement() == 3) //If the current element is eraser
 		{
 			 //Start off the button to being on
-			eraser_button.setImageResource(R.drawable.eraser_on);
+			//eraser_button.setImageResource(R.drawable.eraser_on);
 		}
 		else
 		{
 			//Start off the eraser in "off" position
-			eraser_button.setImageResource(R.drawable.eraser);
+			//eraser_button.setImageResource(R.drawable.eraser);
 		}
 		
 		
@@ -114,7 +121,7 @@ public class MenuBar extends LinearLayout
 		(
 			new OnClickListener()
 			{
-				@Override
+
 				public void onClick(View v)
 				{
 					if(play)
@@ -147,7 +154,6 @@ public class MenuBar extends LinearLayout
 		(
 			new OnClickListener()
 			{
-				@Override
 				public void onClick(View v)
 				{
 			  
@@ -171,7 +177,6 @@ public class MenuBar extends LinearLayout
 		(
 			new OnClickListener()
 			{
-				@Override
 				public void onClick(View v)
 				{
 			    	  if (MainActivity.load() == 1)
@@ -191,7 +196,6 @@ public class MenuBar extends LinearLayout
 		(
 			new OnClickListener()
 			{
-				@Override
 				public void onClick(View v)
 				{
 			    	  if (MainActivity.loadDemo() == 1)
@@ -211,7 +215,6 @@ public class MenuBar extends LinearLayout
 		(
 			new OnClickListener()
 			{
-				@Override
 				public void onClick(View v)
 				{
 					activity.finish();

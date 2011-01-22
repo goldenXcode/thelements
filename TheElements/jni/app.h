@@ -37,6 +37,9 @@ extern int play;
 //Size variable
 extern int size;
 
+
+extern int FPS;
+
 //Array for bitmap drawing
 extern unsigned char colors[TPixels*3]; // 3 bytes per pixel
 

@@ -28,6 +28,7 @@ int cpoint = 0;
 int play = 1;
 //Size variable initialize it here so we don't have to do it in resetup and we can keep our brush size
 int size = 4;
+int FPS = 0;
 
 //Array for bitmap drawing
 unsigned char colors[TPixels*3]; // 3 bytes per pixel
