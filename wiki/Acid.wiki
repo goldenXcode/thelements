@@ -2,4 +2,4 @@
 
 = Acid =
 
-Acid is a corrosive particle that will eat through most other elements. The only exceptions are [DestructibleWall] and Water. Acid falls downward when placed on the the screen.
+Acid is a corrosive particle that will eat through most other elements. The only exceptions are [DestructibleWall] and [Water]. Acid falls downward when placed on the the screen.
