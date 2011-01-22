@@ -2,4 +2,4 @@
 
 = Destructible Wall =
 
-Destructible Walls are just like regular walls, except they can be melted by Magma and eaten through by Acid. They can also be blown up using C4, which will create Sand.
+Destructible Walls are just like regular [Wall]s, except they can be melted by [Magma] and eaten through by [Acid]. They can also be blown up using [C4], which will create [Sand].
