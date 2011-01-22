@@ -1,0 +1,5 @@
+#summary This is a help file for the Plant element.
+
+= Plant =
+
+Plant is the only living particle in the game. It doesn't technically move but there's a twist. Whenever it comes into contact with [Water], it will grow and turn the [Water] into plant. Depending on what you're trying to accomplish, this chain reaction can have drastic effects on your ecosystem. One little plant particle can wipe out a lake. It can even grow upwards when under a [Water] fall. Fortunately, plant is also highly flammable. It's only takes a little [Fire] or [Magma] to eat up large areas of plant growth, leaving nothing. Plant also has a weakness for [Salt] and [SaltWater]. When it comes into contact with these, it will die and leave behind [Sand].
