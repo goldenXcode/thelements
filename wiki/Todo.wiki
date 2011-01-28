@@ -18,6 +18,8 @@ This is a list of things we would like to accomplish for this application.  Don'
 
 -Fix any bugs in the Issues section
 
+GL Texture fix: in nativeInit, find textureWidth and textureHeight based on power of two higher than screenWidth and screenHeight. Create a blank texture based on this. In nativeResize, use glTexSubImage2D to replace the portion that is workWidth by workHeight. Draw only that portion on the triangles using texture coords.
+
 = Art =
 
 --
