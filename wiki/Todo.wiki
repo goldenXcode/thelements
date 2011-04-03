@@ -7,22 +7,15 @@ This is a list of things we would like to accomplish for this application.  Don'
 
 = Programming =
 
-*CURRENT - Bug fixing*
+*CURRENT - Finish reworking the framwork*
 
--Add in optimization for collision calculation.  Particles should be put into frozen mode and not calculated if they have been inactive for 10 frames in a row ( this could also be optimized ).  Unfreeze any particles around a particle that has changed state, by either moving or any other action.  This should avoid unnecessary collision calculation.
--Sort unfrozen particles each frame by their Y position to avoid unnecessary collisions while particles are falling. 
--Add in the option to edit any element, not just custom element.
--Add in the option to use sliders to change the background color.
 -Add in black-holes.
--Finish adding in server functionality
-
--Fix any bugs in the Issues section
-
-GL Texture fix: in nativeInit, find textureWidth and textureHeight based on power of two higher than screenWidth and screenHeight. Create a blank texture based on this. In nativeResize, use glTexSubImage2D to replace the portion that is workWidth by workHeight. Draw only that portion on the triangles using texture coords.
+-Add in server functionality.
+-Fix any bugs in the Issues section.
 
 = Art =
 
---
+-Make our UI look good.
 
 = Other =
 
