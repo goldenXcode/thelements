@@ -9,9 +9,9 @@ This is a list of things we would like to accomplish for this application.  Don'
 
 *CURRENT - Finish reworking the framwork*
 
--Add in black-holes.
--Add in server functionality.
--Fix any bugs in the Issues section.
+  * Add in black-holes.
+  * Add in server functionality.
+  * Fix any bugs in the Issues section.
 
 = Art =
 
