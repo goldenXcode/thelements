@@ -5,13 +5,6 @@
 Global arrays.
 
 {{{
-heat[TPoints]; //0-10, changes based on atmospheric heat and collisions
-fallspeed[TPoints/TElements?]; //Overall fall speed = fallspeed[e]*atmosphereGrav
-life[TPoints/TElements?]; //Frames before element deletion (possibly not needed)
-state[TElements]; //0=solid, 1=liquid, 2=gas
-special[TElements]; //Indexed special effects occurring every frame
-specialval[TPoints]; //The value per point that is possibly used in special effects
-density[TElements]; //0-10, density of the element
 
 //Self explanatory
 xvel[TPoints];
@@ -20,21 +13,24 @@ x[TPoints];
 y[TPoints];
 
 //An array of all pixels
-allcoords[width][height];
+allCoords[workWidth*workHeight];
 
 //Predefined collision array
 collisions[TElements][TElements];
 }}}
 
 ==Atmosphere==
-Defines the environment in which the reactions take place. Stored in a file with a .atm extension. Can be selected during play.
+Defines the environment in which the reactions take place. Modified through Preferences.
 
 {{{
 struct Atmosphere
 {
     heat; //The temperature of the surroundings
     gravity; //-1 - 1, the multiplier for fall speed
-    walled; //Whether elements can fall through the edges or not
+    borderTop; //Whether elements can fall through the top
+    borderLeft;// ... left
+    borderBottom;// ... bottom
+    borderRight;// ... right
     name; //The name given to the atmosphere
     red, green, blue; //The RGB color of the background, this color is then applied to the eraser
 };
