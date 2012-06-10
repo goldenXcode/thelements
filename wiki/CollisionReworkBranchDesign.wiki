@@ -1,4 +1,4 @@
-#summary Ideas for the CollisionRework Branch
+#summary Summary of our current framework
 #labels Phase-Design
 
 ==Arrays==
