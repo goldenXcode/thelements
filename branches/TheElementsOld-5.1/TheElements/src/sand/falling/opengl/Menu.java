@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import sand.falling.opengl.custom.CustomMaker;
-import sand.falling.opengl.network.networklogin;
 import sand.falling.opengl.MainActivity;
 
 import android.app.Activity;
@@ -22,17 +21,12 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.mobclix.android.sdk.MobclixAdView;
-import com.mobclix.android.sdk.MobclixMMABannerXLAdView;
-
 public class Menu extends Activity
 {
-	public static MobclixMMABannerXLAdView banner_adview;
 	public static Button start_game_button;
 	public static Button how_to_play_button;
 	public static Button custom_button;
 	public static Button about_button;
-	public static Button login_button;
 	public static Button exit_button;
 	public static Button clear_button;
 	public static boolean loaded = false;
@@ -49,16 +43,6 @@ public class Menu extends Activity
 		
 		setContentView(R.layout.main_menu);
 		
-		try
-		{
-			//Define all the objects
-			banner_adview = (MobclixMMABannerXLAdView) findViewById(R.id.banner_adview);
-		}
-		catch (NullPointerException e)
-		{
-			e.printStackTrace();
-		}
-		
 		
 		start_game_button = (Button) findViewById(R.id.start_game_button);
 		how_to_play_button = (Button) findViewById(R.id.how_to_play_button);
@@ -66,16 +50,6 @@ public class Menu extends Activity
 		about_button = (Button) findViewById(R.id.about_button);
 		exit_button = (Button) findViewById(R.id.exit_button);
 		clear_button = (Button) findViewById(R.id.clear_button);
-		login_button = (Button) findViewById(R.id.login_button);
-		
-		try
-		{
-			banner_adview.getAd();
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
 		
 		
 		start_game_button.setOnClickListener
@@ -116,18 +90,6 @@ public class Menu extends Activity
 				}
 			}
 		);
-		login_button.setOnClickListener
-		(
-			new OnClickListener()
-			{
-				public void onClick(View v)
-				{
-					
-					startActivity(new Intent(Menu.this, networklogin.class)); //start login activity
-					
-				}
-			}
-		);
 		custom_button.setOnClickListener
 		(
 			new OnClickListener()
@@ -163,10 +125,6 @@ public class Menu extends Activity
 				}
 			}
 		);
-	}
-	public void onSuccessfulLoad(MobclixAdView view)
-	{
-		loaded = true;
 	}
 	@Override
 	public void onResume()
