@@ -18,6 +18,10 @@ public class CustomElementManager
 		sCustomElements.clear();
 		//Get the array of filenames
 		String[] elementFiles = elementDir.list();
+		if (elementFiles == null)
+		{
+			return;
+		}
 		Log.v("TheElements", "CustomElementManager refreshed, files found: " + elementFiles.length);
 		for(int i = 0; i < elementFiles.length; i++)
 		{
