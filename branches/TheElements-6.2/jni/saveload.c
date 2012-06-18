@@ -8,6 +8,11 @@
 #include "saveload.h"
 #include <android/log.h>
 
+const char *get_filename_ext(const char *filename) {
+	const char *dot = strrchr(filename, '.');
+	if(!dot || dot == filename) return "";
+	return dot;
+}
 char saveState(char* saveLoc)
 {
 	// Lock the mutex so that we don't continue to update
@@ -49,7 +54,7 @@ char saveStateLogic(char* saveLoc)
 		strcat(saveLoc, TEMP_SAVE_FILE);
 		strcat(saveLoc, SAVE_EXTENSION);
 	}
-	*/
+	 */
 	fp = fopen(saveLoc, "w");
 
 	if (fp != NULL)
@@ -65,6 +70,7 @@ char saveStateLogic(char* saveLoc)
 			elementSaveFilter[i] = 0;
 		}
 
+		__android_log_write(ANDROID_LOG_INFO, "LOG", "Start preprocessing loop");
 		//Preprocessing loop
 		numElementsToBeSaved = 0;
 		for (counterX = 0; counterX < workWidth; counterX++)
@@ -80,7 +86,8 @@ char saveStateLogic(char* saveLoc)
 				}
 			}
 		}
-		
+		__android_log_write(ANDROID_LOG_INFO, "LOG", "End preprocessing loop");
+
 		//First write how many custom elements will be saved
 		fprintf(fp, "%d\n\n", numElementsToBeSaved);
 
@@ -96,29 +103,41 @@ char saveStateLogic(char* saveLoc)
 		 */
 		for (i = 0; i < numElements; i++)
 		{
+			char buffer[10];
+			sprintf(buffer, "%d", i);
+			__android_log_write(ANDROID_LOG_INFO, "LOG", buffer);
 			if(elementSaveFilter[i] == 1)
 			{
+				__android_log_write(ANDROID_LOG_INFO, "LOG", "0");
 				fprintf(fp, "%d\n", i);
+				__android_log_write(ANDROID_LOG_INFO, "LOG", "1");
 				fprintf(fp, "%s\n", elements[i]->name);
+				__android_log_write(ANDROID_LOG_INFO, "LOG", "2");
 				fprintf(fp, "%d %d %d %d\n",
 						elements[i]->state,
 						elements[i]->startingTemp,
 						elements[i]->lowestTemp,
 						elements[i]->highestTemp);
+				__android_log_write(ANDROID_LOG_INFO, "LOG", "3");
 				fprintf(fp, "%d %d\n",
 						elements[i]->lowerElement->index,
 						elements[i]->higherElement->index);
+				__android_log_write(ANDROID_LOG_INFO, "LOG", "4");
 				fprintf(fp, "%d %d %d\n",
 						elements[i]->red,
 						elements[i]->green,
 						elements[i]->blue);
+				__android_log_write(ANDROID_LOG_INFO, "LOG", "5");
 				//TODO: Specials & useElementSpecialVals
 				fprintf(fp, "%d %d %d\n\n",
 						elements[i]->density,
 						elements[i]->fallVel,
 						elements[i]->inertia);
+				__android_log_write(ANDROID_LOG_INFO, "LOG", "6");
 			}
 		}
+
+		__android_log_write(ANDROID_LOG_INFO, "LOG", "Wrote custom elements");
 
 		//Save the dimensions
 		fprintf(fp, "%d %d\n\n", workWidth, workHeight);
@@ -205,7 +224,7 @@ char loadStateLogic(char* loadLoc)
 		{
 			return FALSE;
 		}
-		
+
 		strcpy(loadLoc, filename);
 	}
 	else if (type == TEMP_SAVE)
@@ -222,7 +241,7 @@ char loadStateLogic(char* loadLoc)
 		strcat(loadLoc, DEMO_SAVE_FILE);
 		strcat(loadLoc, SAVE_EXTENSION);
 	}
-	*/
+	 */
 	//Load the file for reading
 	fp = fopen(loadLoc, "r");
 
@@ -274,16 +293,16 @@ char loadStateLogic(char* loadLoc)
 		for (i = 0; i < numElementsSaved; i++)
 		{
 			elements[ tempMap[3*i] ]->lowerElement = tempMap[3*i + 1] > NUM_BASE_ELEMENTS ? 
-						elements[ tempElMap[tempMap[3*i + 1]] ] : elements[tempMap[3*i + 1]];
+					elements[ tempElMap[tempMap[3*i + 1]] ] : elements[tempMap[3*i + 1]];
 			elements[ tempMap[3*i] ]->lowerElement = tempMap[3*i + 2] > NUM_BASE_ELEMENTS ? 
-						elements[tempElMap[tempMap[3*i + 2]] ]: elements[tempMap[3*i + 2]];
+					elements[tempElMap[tempMap[3*i + 2]] ]: elements[tempMap[3*i + 2]];
 		}
 		free(tempMap);
 		free(tempElMap);
 
 		numElements +=  numElementsSaved;
 
-	
+
 		// Get the dimensions
 		if((charsRead = fscanf(fp, "%d %d\n\n", &sizeX, &sizeY)) == EOF || charsRead < 2) {return FALSE;}
 
@@ -318,12 +337,12 @@ char loadStateLogic(char* loadLoc)
 			// Try to read in a particle
 			tempParticle = avail[loq-1];
 			if((charsRead = fscanf(fp, "(%f %f %d %d %d %d)", &tempParticle->x,
-												&tempParticle->y,
-												&tempParticle->xVel,
-												&tempParticle->yVel,
-												&tempParticle->heat,
-												&elementIndex)) == EOF
-												|| charsRead < 6) {continue;}
+					&tempParticle->y,
+					&tempParticle->xVel,
+					&tempParticle->yVel,
+					&tempParticle->heat,
+					&elementIndex)) == EOF
+					|| charsRead < 6) {continue;}
 
 			// We succeeded, so decrement loq to remove the particle from being available
 			loq--;
@@ -489,9 +508,9 @@ char removeTempSave(void)
 
 	return FALSE;
 }
-
 //TODO:
-char saveCustomElement(struct Element* createdCustomElement)
+/*
+char saveCustomElement(struct Element* cCElement)
 {
 	char saveLoc[256];
 	strcpy(saveLoc, ROOT_FOLDER);
@@ -499,13 +518,160 @@ char saveCustomElement(struct Element* createdCustomElement)
 	strcat(saveLoc, createdCustomElement->name);
 	strcat(saveLoc, ELEMENT_EXTENSION);
 
+	FILE* saveFile;
+
+	saveFile = fopen(saveFile,"wb");
+
+	fprintf(saveFile, cCElement->name );
+	fprintf(saveFile, " %d", cCElement->startingTemp,
+						cCElement->lowestTemp,
+						cCElement->highestTemp,
+						cCElement->lowerElement->index,
+						cCElement->higherElement->index,
+						cCElement->)
+
+
+
+	fclose(saveFile);
 	//TODO: Save to saveLoc
 
 	return FALSE;
 }
+ */
+
+//Saves the custom element to the correct file
+char saveCustomElementHash(char* elementHash)
+{
+	char saveLoc[256];
+	char name[256];
+
+	//Extract the name out of the elementHash, there might be a better way to do this but w/e, particularly I don't think the second while is needed but meh
+	strcpy(name,elementHash);
+	int i = 0;
+	while ( elementHash[i] != ' ')
+	{
+		i++;
+	}
+	while( i < 256 )
+	{
+		name[i] = 0;
+	}
+
+	strcpy(saveLoc, ROOT_FOLDER);
+	strcat(saveLoc, ELEMENTS_FOLDER);
+	strcat(saveLoc, name);
+	strcat(saveLoc, ELEMENT_EXTENSION);
+
+	FILE* saveFile;
+
+	saveFile = fopen(saveLoc,"wb");
+	fprintf( saveFile,elementHash);
+	fclose(saveFile);
+
+
+	return FALSE;
+}
+
+char loadCustomElements(void)
+{
+	char loadLoc[256];
+	char saveLoc[256];
+	//Load the file names of everything in the loading directory
+	strcpy(loadLoc, ROOT_FOLDER);
+	strcpy(saveLoc, ROOT_FOLDER);
+	strcat(loadLoc, ELEMENTS_FOLDER);
+	strcat(saveLoc, ELEMENTS_FOLDER);
+	strcat(saveLoc, LIST_SAVE);
+
+	strcat(saveLoc, LIST_EXTENSION);
+
+	FILE* sp = fopen(saveLoc, "wb");
+
+	DIR* mydir = opendir(loadLoc);
+
+	struct dirent *entry = NULL;
+
+	while((entry = readdir(mydir))) /* If we get EOF, the expression is 0 and the loop stops. */
+	{
+		if ( !strcmp(get_filename_ext(entry->d_name),ELEMENT_EXTENSION))
+		{
+			char location[256];
+			strcpy( location, loadLoc);
+			strcat( location, entry->d_name);
+			loadCustomElement( location );
+			fprintf(sp, entry->d_name);
+			fprintf(sp, "\n");
+		}
+	}
+
+	closedir(mydir);
+
+	fclose(sp);
+	return FALSE;
+}
 char loadCustomElement(char* loadLoc)
 {
-	//TODO: Load from loadLoc (figure out saving of an element first)
+	FILE* fp;
+	fp = fopen(loadLoc, "rb");
+
+	int lowerElementIndex, higherElementIndex;
+
+	struct Element* tempCustom = (struct Element*) malloc(sizeof(struct Element));
+	if(fscanf(fp, "%s", &tempCustom->name) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &tempCustom->base) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &tempCustom->state) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &tempCustom->startingTemp) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &tempCustom->lowestTemp) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &tempCustom->highestTemp) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &lowerElementIndex) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &higherElementIndex) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &tempCustom->red) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &tempCustom->green) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &tempCustom->blue) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &tempCustom->density) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &tempCustom->fallVel) == EOF) {return FALSE;}
+	if(fscanf(fp, "%d", &tempCustom->inertia) == EOF) {return FALSE;}
+
+	tempCustom->collisions = malloc( NUM_BASE_ELEMENTS * sizeof(char));
+	tempCustom->specials = malloc( MAX_SPECIALS*sizeof(char));
+	tempCustom->specialVals = malloc( MAX_SPECIALS*sizeof(char));
+	tempCustom->useElementSpecialVals = elements[tempCustom->base]->useElementSpecialVals;
+
+	int i;
+	for (i = 0; i < NUM_BASE_ELEMENTS;i++ )
+	{
+		fscanf(fp,"%d",&tempCustom->collisions[i]);
+	}
+	for (i = 0; i < MAX_SPECIALS;i++ )
+	{
+		fscanf(fp,"%d",&tempCustom->specials[i]);
+		fscanf(fp,"%d",&tempCustom->specialVals[i]);
+	}
+
+	struct Element** tempElementArray;
+	tempElementArray = malloc(numElements*sizeof( struct Element*));
+	for ( i = 0; i < numElements; i++)
+	{
+		tempElementArray[i] = elements[i];
+	}
+	free(elements);
+	elements = malloc((numElements+1)*sizeof( struct Element*));
+	for ( i = 0; i < numElements; i++)
+	{
+		elements[i] = tempElementArray[i];
+	}
+
+	tempCustom->index = numElements;
+	tempCustom->higherElement = elements[higherElementIndex];
+	tempCustom->lowerElement = elements[lowerElementIndex];
+
+	//Increment number of Elements and add the newest element in
+	numElements++;
+	elements[numElements-1] = tempCustom;
+
+	char buffer[256];
+	sprintf(buffer, "Loaded custom element, index: %d, element->index: %d", numElements-1, tempCustom->index);
+	__android_log_write(ANDROID_LOG_INFO, "LOG", buffer);
 
 	return FALSE;
 }
