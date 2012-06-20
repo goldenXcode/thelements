@@ -38,8 +38,16 @@
 #include "setup.h"
 //Include the string functions
 #include <string.h>
+<<<<<<< .working
 //Include the directory functions
 #include <dirent.h>
+=======
+//Include the directory functions
+#include <dirent.h>
+#include <sys/stat.h>
+//Include error reporting functions
+#include <errno.h>
+>>>>>>> .merge-right.r405
 
 char saveState(char* saveLoc);
 char saveStateLogic(char* saveLoc);
