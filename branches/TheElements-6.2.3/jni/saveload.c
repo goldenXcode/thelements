@@ -266,7 +266,7 @@ char loadStateLogic(char* loadLoc)
 	gameSetup();
 
 	int numElementsSaved, i, j, elementIndex, lowerElementIndex, higherElementIndex,
-		sizeX, sizeY, fileMaxSpecials, tempSpecialVal, charsRead, failed;
+	sizeX, sizeY, fileMaxSpecials, tempSpecialVal, charsRead, failed;
 	struct Element* tempElement;
 	struct Particle* tempParticle;
 	char lookAhead;
