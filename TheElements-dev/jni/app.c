@@ -26,9 +26,6 @@ int getColorIndex( int x, int y )
  * VARIABLES
  */
 
-char udid[MAX_UDID_LENGTH];
-int versionCode;
-
 struct Element** elements;
 unsigned char numElements;
 struct Particle* particles[MAX_POINTS];

@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -21,7 +20,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -66,7 +64,7 @@ public class MainActivity extends FlurryActivity
 	static CharSequence[] baseElementsList;
 	static ArrayList<String> elementsList;
 
-	public static boolean play = false;
+	public static boolean play = true;
 	public static boolean zoomState = ZOOMED_IN; //Zoomed in or not
 
 	private SensorManager mSensorManager;
@@ -91,6 +89,9 @@ public class MainActivity extends FlurryActivity
 	{
 		//Uses onCreate from the general Activity
 		super.onCreate(savedInstanceState);
+		
+		// Initialize the native library
+		nativeInit();
 
 		//Init the shared preferences and set the ui state
 		Preferences.initSharedPreferences(this);
@@ -140,6 +141,9 @@ public class MainActivity extends FlurryActivity
 	@Override
 	protected void onResume()
 	{
+		// Initialize the native library
+		nativeInit();
+		
 		//Use the super onResume
 		super.onResume();
 		
@@ -237,12 +241,7 @@ public class MainActivity extends FlurryActivity
 			control.setActivity(this);
 			//Set instance of activity for MenuBar also
 			menu_bar.setActivity(this);
-			
-			//start paused
-			play = false;
-			menu_bar.setPlayState(false);
 		}
-		
 
 		//Call onResume() for view too
 		// Log.v("TheElements", "sand_view.onResume()");
@@ -281,10 +280,8 @@ public class MainActivity extends FlurryActivity
 						MenuBar.setEraserOff();
 					}
 					setElement((char) (item + NORMAL_ELEMENT));
-					setPlayState(true);
 				}
 			});
-			setPlayState(false);
 			AlertDialog alert = builder.create(); // Create the dialog
 
 			return alert; // Return handle
@@ -401,20 +398,6 @@ public class MainActivity extends FlurryActivity
 	//Set up the views based on the state of ui
 	private void setUpViews()
 	{
-		// Initialize the native library (SandView needs to make calls)
-		String androidId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-		int versionCode;
-		try
-		{
-			versionCode = getPackageManager().getPackageInfo(this.getPackageName(), 0).versionCode;
-		}
-		catch (NameNotFoundException e)
-		{
-			versionCode = -1;
-			e.printStackTrace();
-		}
-		nativeInit(androidId, versionCode);
-		
 		//Set the content view based on this variable
 		if (ui)
 		{
@@ -462,7 +445,7 @@ public class MainActivity extends FlurryActivity
 	public static native char removeTempSave();
 	
 	//General utility functions
-	private static native void nativeInit(String udidString, int versionCode);
+    public static native void nativeInit();
 	public native void clearScreen();
 	
 	//Setters

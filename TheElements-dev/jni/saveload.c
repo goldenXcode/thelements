@@ -191,7 +191,6 @@ char loadState(char* loadLoc)
 
 	FILE* fp = fopen(loadLoc, "r");
 	char retVal = loadStateLogic(fp);
-	play = FALSE;
 	if (fp)
 	{
 		fclose(fp);
