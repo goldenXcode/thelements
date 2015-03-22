@@ -1,0 +1,3 @@
+# Drag #
+
+Drag is unique in that it is the only element that can not be seen. It's more like a force than a particle. When you paint Drag onto the screen, it will push light weight particles or liquids in the direction you are painting. For example, lets say you have rain falling on the screen. You select drag from the element selector and move your finger from left to right across the screen. Any [Water](Water.md) or [Steam](Steam.md) particles in your fingers path will move from left to right as if caught in the wind. This can be useful when you need to add a little randomness to a stable ecosystem.

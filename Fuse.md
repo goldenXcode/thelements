@@ -1,0 +1,3 @@
+# Fuse #
+
+Fuses are generally used to create a timed explosion. To create a fuse, simply pick it from the element selector and draw it like you would a [Wall](Wall.md). Fuses are obviously very flammable and when they come into contact with [Magma](Magma.md) or [Fire](Fire.md) they will begin to to burn up. As a fuse burns, it will create a little bit of [Fire](Fire.md). To get the most fun out of your fuse, try connecting one end to [C4](C4.md) or C4++ and then ignite the other end.

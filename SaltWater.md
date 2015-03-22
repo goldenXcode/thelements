@@ -1,0 +1,3 @@
+# Salt Water #
+
+Salt water can produced in one of two ways. First you can draw it on the screen just like regular water. Secondly, you can mix the [Salt](Salt.md) element with the [Water](Water.md) element. Salt water floats on [Oil](Oil.md) and sinks in [Water](Water.md). When it comes into contact with [Fire](Fire.md) or [Magma](Magma.md), it will evaporate and create [Steam](Steam.md). Salt water will also melt [Ice](Ice.md) and kill [Plant](Plant.md).

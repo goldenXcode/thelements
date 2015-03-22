@@ -1,0 +1,3 @@
+# Magma #
+
+Magma is an extremely hot particle that acts like a liquid. Magma has a lot of fun reactions. When combined with [Water](Water.md) it creates [Steam](Steam.md) and [Stone](Stone.md). When combined with [Sand](Sand.md) it creates [Glass](Glass.md). When combined with [Mud](Mud.md), it produces [Stone](Stone.md) and [Steam](Steam.md). It also works very well as an ignition device for [Fuse](Fuse.md).

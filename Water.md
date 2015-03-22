@@ -1,0 +1,3 @@
+# Water #
+
+Water is one of the most versatile elements in the game. Water is a particle that acts like a liquid. Water always flows downwards. When it comes into contact with [Fire](Fire.md) or [Magma](Magma.md) it will create [Steam](Steam.md). [Steam](Steam.md) that has had time to cool, will turn back into water. This concept is crucial for creating a rain cycle in your ecosystem. When water comes into contact with [Salt](Salt.md) it will create [SaltWater](SaltWater.md). When water comes into contact with [Plant](Plant.md) it will be consumed and turned into more [Plant](Plant.md). [Oil](Oil.md) floats on water. When water comes into contact with [Ice](Ice.md) it will turn into more [Ice](Ice.md).
